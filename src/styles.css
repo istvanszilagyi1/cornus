@@ -1,0 +1,277 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Cornus Apartman – Tokaj
+ * Design system: éjszakai szőlőhegy, arany aszú fény, meleg homok tónusok.
+ */
+
+@theme inline {
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Jost", ui-sans-serif, system-ui, sans-serif;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-sand: var(--sand);
+  --color-sand-foreground: var(--sand-foreground);
+  --color-wine: var(--wine);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --radius: 0.25rem;
+
+  --background: oklch(0.15 0.012 70);
+  --foreground: oklch(0.95 0.012 85);
+
+  --card: oklch(0.19 0.014 68);
+  --card-foreground: oklch(0.95 0.012 85);
+  --popover: oklch(0.19 0.014 68);
+  --popover-foreground: oklch(0.95 0.012 85);
+
+  --primary: oklch(0.79 0.13 80);
+  --primary-foreground: oklch(0.18 0.02 70);
+
+  --secondary: oklch(0.25 0.016 70);
+  --secondary-foreground: oklch(0.95 0.012 85);
+
+  --muted: oklch(0.24 0.014 70);
+  --muted-foreground: oklch(0.72 0.02 82);
+
+  --accent: oklch(0.3 0.03 75);
+  --accent-foreground: oklch(0.95 0.012 85);
+
+  --destructive: oklch(0.55 0.19 25);
+  --destructive-foreground: oklch(0.97 0.01 85);
+
+  --border: oklch(0.3 0.015 72);
+  --input: oklch(0.3 0.015 72);
+  --ring: oklch(0.79 0.13 80);
+
+  --sand: oklch(0.93 0.025 85);
+  --sand-foreground: oklch(0.2 0.02 70);
+  --wine: oklch(0.42 0.13 25);
+
+  --chart-1: oklch(0.79 0.13 80);
+  --chart-2: oklch(0.6 0.09 140);
+  --chart-3: oklch(0.55 0.14 30);
+  --chart-4: oklch(0.7 0.06 250);
+  --chart-5: oklch(0.65 0.1 320);
+
+  --sidebar: oklch(0.19 0.014 68);
+  --sidebar-foreground: oklch(0.95 0.012 85);
+  --sidebar-primary: oklch(0.79 0.13 80);
+  --sidebar-primary-foreground: oklch(0.18 0.02 70);
+  --sidebar-accent: oklch(0.25 0.016 70);
+  --sidebar-accent-foreground: oklch(0.95 0.012 85);
+  --sidebar-border: oklch(0.3 0.015 72);
+  --sidebar-ring: oklch(0.79 0.13 80);
+
+  --gradient-gold: linear-gradient(
+    100deg,
+    oklch(0.86 0.11 90),
+    oklch(0.79 0.13 80) 45%,
+    oklch(0.68 0.12 60)
+  );
+  --gradient-veil: linear-gradient(
+    to bottom,
+    oklch(0.12 0.01 70 / 0.15) 0%,
+    oklch(0.12 0.01 70 / 0.55) 55%,
+    oklch(0.15 0.012 70) 100%
+  );
+  --shadow-lift: 0 30px 70px -30px oklch(0.05 0.01 70 / 0.85);
+  --shadow-glow: 0 0 60px -10px oklch(0.79 0.13 80 / 0.35);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  .font-display {
+    font-family: var(--font-display);
+    font-weight: 300;
+  }
+}
+
+@utility text-gradient-gold {
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility bg-veil {
+  background: var(--gradient-veil);
+}
+
+@utility shadow-lift {
+  box-shadow: var(--shadow-lift);
+}
+
+@utility shadow-glow {
+  box-shadow: var(--shadow-glow);
+}
+
+@utility eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+@utility hairline {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--color-primary),
+    transparent
+  );
+}
+
+/* --- Animations --- */
+
+@keyframes cornus-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cornus-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes cornus-kenburns {
+  0% {
+    transform: scale(1.05) translate3d(0, 0, 0);
+  }
+  100% {
+    transform: scale(1.18) translate3d(-1.5%, -1.5%, 0);
+  }
+}
+
+@keyframes cornus-reveal {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes cornus-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@utility animate-fade-up {
+  animation: cornus-fade-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@utility animate-soft-fade {
+  animation: cornus-fade 1.4s ease-out both;
+}
+
+@utility animate-kenburns {
+  animation: cornus-kenburns 14s ease-out both;
+}
+
+@utility animate-reveal {
+  animation: cornus-reveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@utility animate-float {
+  animation: cornus-float 3.2s ease-in-out infinite;
+}
+
+/* Scroll reveal: elements start hidden, .is-visible triggers the animation */
+@utility reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition:
+    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@utility is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
