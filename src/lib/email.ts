@@ -160,8 +160,8 @@ export function buildGuestEmailHtml(payload: BookingEmailPayload) {
   const guests = payload.guests ?? Math.max(1, Number(payload.adults ?? 1) + Number(payload.children ?? 0));
 
   const bodyText = {
-    booking_received: "Köszönjük a foglalási kérelmedet! A foglalásod jóváhagyásához és véglegesítéséhez kérjük, utald át az előleget (a végösszeg 50%-át) a lent megadott bankszámlára 48 órán belül. Az alábbiakban találod a pontos árkalkulációt és a banki adatokat.",
-    booking_approved: "Örömmel értesítünk, hogy a foglalásod jóváhagyásra került! Szeretettel várunk a Cornus Apartmanban. A gördülékeny tartózkodás érdekében csatolva küldjük a szálláshely házirendjét.",
+    booking_received: "Köszönjük a foglalási kérelmedet! A foglalásod jóváhagyásához és véglegesítéséhez kérjük, utald át az előleget (a végösszeg 50%-át) a lent megadott bankszámlára 48 órán belül. Az alábbiakban találod a pontos árkalkulációt és a banki adatokat. Az érkezés 15:00-16:00 között a távozás pedig 10:00. Ettől eltérő távozás külön egyeztetést igényel.",
+    booking_approved: "Örömmel értesítünk, hogy a foglalásod jóváhagyásra került! Szeretettel várunk a Cornus Apartmanban. A gördülékeny tartózkodás érdekében csatolva küldjük a szálláshely házirendjét. Az érkezés 15:00-16:00 között a távozás pedig 10:00. Ettől eltérő távozás külön egyeztetést igényel.",
     booking_rejected: "Sajnáljuk, de a megadott időpontokra a foglalásod elutasításra került. Kérjük, válassz másik időpontot a weboldalon, vagy vedd fel velünk a kapcsolatot, hogy közösen találjunk egy megfelelő dátumot.",
   }[payload.action];
 
