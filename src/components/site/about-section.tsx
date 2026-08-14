@@ -1,6 +1,10 @@
 import { BedDouble, Wifi, Coffee, Car, Wine, Sparkles } from "lucide-react";
 import apartmentLiving from "@/assets/apartment-living.jpg";
 import apartmentBedroom from "@/assets/apartment-bedroom.jpg";
+import gardenview1 from "@/assets/gardenview1.jpeg";
+import nature from "@/assets/nature.jpeg";
+import outsidewine1 from "@/assets/outsidewine1.jpeg";
+import outsidewine2 from "@/assets/outsidewine2.jpeg";
 import { Reveal, SectionHeading } from "./section";
 import { SITE } from "@/lib/site";
 
@@ -122,8 +126,8 @@ export function AboutSection() {
               <Reveal className="col-span-2 overflow-hidden rounded-sm">
                 <div className="aspect-[16/10]">
                   <img
-                    src={apartmentLiving}
-                    alt="A Cornus Apartman nappalija"
+                    src={gardenview1}
+                    alt="A Cornus kertje és környező táj"
                     loading="lazy"
                     width={1600}
                     height={1072}
@@ -139,8 +143,8 @@ export function AboutSection() {
               >
                 <div className="aspect-[4/5]">
                   <img
-                    src={apartmentBedroom}
-                    alt="Hálószoba a Cornus Apartmanban"
+                    src={nature}
+                    alt="Nyugodt tokaji természet részlet"
                     loading="lazy"
                     width={1600}
                     height={1067}
@@ -156,8 +160,8 @@ export function AboutSection() {
               >
                 <div className="aspect-[4/5]">
                   <img
-                    src={apartmentLiving}
-                    alt="A Cornus Apartman nappalijának részlete"
+                    src={outsidewine1}
+                    alt="Tokaji borvidék és szőlőhegy részlet"
                     loading="lazy"
                     width={1600}
                     height={1072}
@@ -173,8 +177,8 @@ export function AboutSection() {
               >
                 <div className="aspect-[16/7]">
                   <img
-                    src={apartmentBedroom}
-                    alt="A Cornus Apartman hálószobájának részlete"
+                    src={outsidewine2}
+                    alt="Tokaji környék napsütötte, borostyán színű látképe"
                     loading="lazy"
                     width={1600}
                     height={1067}

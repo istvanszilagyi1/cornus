@@ -9,16 +9,28 @@ import apartmentBath from "@/assets/apartment-bath.jpg";
 import heroTokaj from "@/assets/hero-tokaj.jpg";
 import tokajCellar from "@/assets/tokaj-cellar.jpg";
 import tokajTown from "@/assets/tokaj-town.jpg";
+import gardenview1 from "@/assets/gardenview1.jpeg";
+import nature from "@/assets/nature.jpeg";
+import nature2 from "@/assets/nature2.jpeg";
+import nature3 from "@/assets/nature3.jpeg";
+import outsidewine1 from "@/assets/outsidewine1.jpeg";
+import outsidewine2 from "@/assets/outsidewine2.jpeg";
 import { Reveal, SectionHeading } from "./section";
 import { cn } from "@/lib/utils";
 
 const DEFAULTS = [
-  { id: "d1", url: apartmentLiving, title: "Nappali panorámaablakkal", category: "apartman" },
-  { id: "d2", url: apartmentBedroom, title: "Hálószoba", category: "apartman" },
-  { id: "d3", url: apartmentBath, title: "Fürdőszoba", category: "apartman" },
-  { id: "d4", url: heroTokaj, title: "Tokaji szőlőhegy", category: "tokaj" },
-  { id: "d5", url: tokajCellar, title: "Pince és aszú", category: "tokaj" },
-  { id: "d6", url: tokajTown, title: "Tokaj városa", category: "tokaj" },
+  { id: "d1", url: gardenview1, title: "Kert és környezet", category: "apartman" },
+  { id: "d2", url: apartmentLiving, title: "Nappali panorámaablakkal", category: "apartman" },
+  { id: "d3", url: apartmentBedroom, title: "Hálószoba", category: "apartman" },
+  { id: "d4", url: apartmentBath, title: "Fürdőszoba", category: "apartman" },
+  { id: "d5", url: nature, title: "Tokaji természet", category: "tokaj" },
+  { id: "d6", url: outsidewine1, title: "Borturizmus és táj", category: "tokaj" },
+  { id: "d7", url: outsidewine2, title: "Naplementés környék", category: "tokaj" },
+  { id: "d8", url: nature2, title: "Kert és hegyoldal", category: "tokaj" },
+  { id: "d9", url: nature3, title: "Nyugodt környezet", category: "tokaj" },
+  { id: "d10", url: heroTokaj, title: "Tokaji szőlőhegy", category: "tokaj" },
+  { id: "d11", url: tokajCellar, title: "Pince és aszú", category: "tokaj" },
+  { id: "d12", url: tokajTown, title: "Tokaj városa", category: "tokaj" },
 ];
 
 export function GallerySection() {

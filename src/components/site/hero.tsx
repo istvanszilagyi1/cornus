@@ -4,10 +4,18 @@ import heroTokaj from "@/assets/hero-tokaj.jpg";
 import apartmentLiving from "@/assets/apartment-living.jpg";
 import tokajCellar from "@/assets/tokaj-cellar.jpg";
 import tokajTown from "@/assets/tokaj-town.jpg";
+import gardenview1 from "@/assets/gardenview1.jpeg";
+import nature from "@/assets/nature.jpeg";
+import outsidewine1 from "@/assets/outsidewine1.jpeg";
+import outsidewine2 from "@/assets/outsidewine2.jpeg";
 import { cn } from "@/lib/utils";
 
 const FRAMES = [
   { src: heroTokaj, alt: "Tokaji szőlőhegy aranyló őszi fényben" },
+  { src: gardenview1, alt: "A Cornus kertje és a környező természet" },
+  { src: outsidewine1, alt: "Tokaj környező borospincék és szőlőhegyek" },
+  { src: outsidewine2, alt: "A környék nyugodt, borostyán színű hangulata" },
+  { src: nature, alt: "A tokaji táj északi, nyugodt része" },
   { src: apartmentLiving, alt: "A Cornus Apartman nappalija panorámaablakkal" },
   { src: tokajCellar, alt: "Tokaji pince hordókkal és aszúval" },
   { src: tokajTown, alt: "Tokaj városa a folyópartról" },
