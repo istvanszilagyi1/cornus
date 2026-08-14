@@ -57,8 +57,7 @@ function AdminPage() {
       <div className="flex min-h-screen flex-col items-center justify-center gap-4 px-6 text-center">
         <h1 className="font-display text-3xl text-foreground">Nincs admin jogosultságod</h1>
         <p className="max-w-md text-sm text-muted-foreground">
-          Ez a fiók nem rendelkezik admin jogosultsággal. Csak azok léphetnek be, akiknek a
-          user_roles táblában az admin szerep szerepel.
+          A bejelentkezés nem sikerült vagy a felhasználó nincs engedélyezve az admin felületre.
         </p>
         <button onClick={signOut} className={btn}>
           <LogOut className="size-4" /> Kijelentkezés
