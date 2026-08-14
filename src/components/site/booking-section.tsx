@@ -504,7 +504,7 @@ export function BookingSection() {
                     className="mt-1 size-4 accent-primary"
                   />
                   <span>
-                    Elfogadom a <LegalModalLink label="[Házirend]" title="Házirend" pdfUrl="/hazirend.pdf" /> és az <LegalModalLink label="[Adatkezelési Tájékoztató]" title="Adatkezelési Tájékoztató" pdfUrl="/adatkezelesi.pdf" /> feltételeit.
+                    Elfogadom a <LegalModalLink label="[Házirend]" title="Házirend" pdfUrl="/hazirend.pdf" /> és az <LegalModalLink label="[Adatkezelési Tájékoztató]" title="Adatkezelési Tájékoztató" pdfUrl="/adatkezelesi.html" /> feltételeit.
                   </span>
                 </label>
                 <button
