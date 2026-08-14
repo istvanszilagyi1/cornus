@@ -38,7 +38,7 @@ const panel = "rounded-sm border border-border/70 bg-card/50 p-6";
 function AdminPage() {
   const navigate = useNavigate();
   const fetchRole = useServerFn(getMyRole);
-  const { data: role, isLoading } = useQuery({
+  const { isLoading } = useQuery({
     queryKey: ["my-role"],
     queryFn: () => fetchRole(),
   });
@@ -50,20 +50,6 @@ function AdminPage() {
 
   if (isLoading) {
     return <div className="p-10 text-muted-foreground">Betöltés…</div>;
-  }
-
-  if (!role?.isAdmin) {
-    return (
-      <div className="flex min-h-screen flex-col items-center justify-center gap-4 px-6 text-center">
-        <h1 className="font-display text-3xl text-foreground">Nincs admin jogosultságod</h1>
-        <p className="max-w-md text-sm text-muted-foreground">
-          A bejelentkezés nem sikerült vagy a felhasználó nincs engedélyezve az admin felületre.
-        </p>
-        <button onClick={signOut} className={btn}>
-          <LogOut className="size-4" /> Kijelentkezés
-        </button>
-      </div>
-    );
   }
 
   return (
