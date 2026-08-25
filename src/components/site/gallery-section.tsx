@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { X } from "lucide-react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { listGallery } from "@/lib/gallery.functions";
 import apartmentLiving from "@/assets/apartment-living.jpg";
 import apartmentBedroom from "@/assets/apartment-bedroom.jpg";
@@ -35,7 +35,7 @@ const DEFAULTS = [
 
 export function GallerySection() {
   const fetchGallery = useServerFn(listGallery);
-  const [lightbox, setLightbox] = useState<string | null>(null);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const { data } = useQuery({
     queryKey: ["gallery"],
@@ -43,6 +43,36 @@ export function GallerySection() {
   });
 
   const images = data?.length ? data : DEFAULTS;
+  const currentImage = lightboxIndex !== null ? images[lightboxIndex] : null;
+
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "ArrowRight") {
+        setLightboxIndex((prev) => (prev === null ? 0 : (prev + 1) % images.length));
+      }
+      if (event.key === "ArrowLeft") {
+        setLightboxIndex((prev) => (prev === null ? images.length - 1 : (prev - 1 + images.length) % images.length));
+      }
+      if (event.key === "Escape") {
+        setLightboxIndex(null);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [images.length, lightboxIndex]);
+
+  const showPrevious = () => {
+    if (lightboxIndex === null) return;
+    setLightboxIndex((lightboxIndex - 1 + images.length) % images.length);
+  };
+
+  const showNext = () => {
+    if (lightboxIndex === null) return;
+    setLightboxIndex((lightboxIndex + 1) % images.length);
+  };
 
   return (
     <section id="galeria" className="relative border-t border-border/50 py-28 md:py-40">
@@ -59,7 +89,7 @@ export function GallerySection() {
             <Reveal key={img.id} delay={(i % 3) * 100}>
               <button
                 type="button"
-                onClick={() => setLightbox(img.url)}
+                onClick={() => setLightboxIndex(i)}
                 className={cn(
                   "group relative block w-full overflow-hidden rounded-sm",
                   i % 5 === 0 ? "aspect-[3/4]" : "aspect-[4/3]",
@@ -83,23 +113,62 @@ export function GallerySection() {
         </div>
       </div>
 
-      {lightbox && (
+      {currentImage && (
         <div
           className="animate-soft-fade fixed inset-0 z-[80] flex items-center justify-center bg-background/95 p-6 backdrop-blur-sm"
-          onClick={() => setLightbox(null)}
+          onClick={() => setLightboxIndex(null)}
         >
           <button
             type="button"
             aria-label="Bezárás"
+            onClick={(event) => {
+              event.stopPropagation();
+              setLightboxIndex(null);
+            }}
             className="absolute top-6 right-6 text-foreground/70 transition-colors hover:text-primary"
           >
             <X className="size-7" />
           </button>
-          <img
-            src={lightbox}
-            alt="Nagyított kép"
-            className="max-h-[85vh] max-w-full rounded-sm object-contain shadow-lift"
-          />
+
+          <button
+            type="button"
+            aria-label="Előző kép"
+            onClick={(event) => {
+              event.stopPropagation();
+              showPrevious();
+            }}
+            className="absolute left-4 top-1/2 z-10 -translate-y-1/2 rounded-full border border-border bg-background/80 p-3 text-foreground shadow-lg transition-transform hover:scale-105 sm:left-8"
+          >
+            <ChevronLeft className="size-6" />
+          </button>
+
+          <button
+            type="button"
+            aria-label="Következő kép"
+            onClick={(event) => {
+              event.stopPropagation();
+              showNext();
+            }}
+            className="absolute right-4 top-1/2 z-10 -translate-y-1/2 rounded-full border border-border bg-background/80 p-3 text-foreground shadow-lg transition-transform hover:scale-105 sm:right-8"
+          >
+            <ChevronRight className="size-6" />
+          </button>
+
+          <div onClick={(event) => event.stopPropagation()} className="relative max-w-[90vw]">
+            <img
+              src={currentImage.url}
+              alt={currentImage.title ?? "Nagyított kép"}
+              className="max-h-[85vh] max-w-full rounded-sm object-contain shadow-lift"
+            />
+            {currentImage.title && (
+              <div className="mt-4 flex items-center justify-between gap-4 text-sm text-foreground/80">
+                <span className="tracking-[0.18em] uppercase">{currentImage.title}</span>
+                <span>
+                  {lightboxIndex + 1}/{images.length}
+                </span>
+              </div>
+            )}
+          </div>
         </div>
       )}
     </section>
