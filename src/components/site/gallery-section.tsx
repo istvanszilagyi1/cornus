@@ -3,34 +3,56 @@ import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { listGallery } from "@/lib/gallery.functions";
-import apartmentLiving from "@/assets/apartment-living.jpg";
-import apartmentBedroom from "@/assets/apartment-bedroom.jpg";
-import apartmentBath from "@/assets/apartment-bath.jpg";
-import heroTokaj from "@/assets/hero-tokaj.jpg";
-import tokajCellar from "@/assets/tokaj-cellar.jpg";
-import tokajTown from "@/assets/tokaj-town.jpg";
-import gardenview1 from "@/assets/gardenview1.jpeg";
-import nature from "@/assets/nature.jpeg";
-import nature2 from "@/assets/nature2.jpeg";
-import nature3 from "@/assets/nature3.jpeg";
-import outsidewine1 from "@/assets/outsidewine1.jpeg";
-import outsidewine2 from "@/assets/outsidewine2.jpeg";
+import bejaratImg from "@/assets/bejárat.jpeg";
+import festivalKatlanImg from "@/assets/festival-katlan.jpg";
+import furdőszobaImg from "@/assets/fürdőszoba.jpeg";
+import furdőszobaAltImg from "@/assets/fürdőszoba2.jpeg";
+import gardenViewImg from "@/assets/gardenview1.jpeg";
+import gyerekSarokImg from "@/assets/gyereksarok.jpeg";
+import heroTokajImg from "@/assets/hero-tokaj.jpg";
+import kanapeImg from "@/assets/kanapé.jpeg";
+import kitchenImg from "@/assets/konyha.jpeg";
+import kitchenAltImg from "@/assets/konyha2.jpeg";
+import livingRoomImg from "@/assets/nappali.jpeg";
+import natureImg from "@/assets/nature.jpeg";
+import nature2Img from "@/assets/nature2.jpeg";
+import nature3Img from "@/assets/nature3.jpeg";
+import outsideWine1Img from "@/assets/outsidewine1.jpeg";
+import outsideWine2Img from "@/assets/outsidewine2.jpeg";
+import wardrobeImg from "@/assets/szekrény.jpeg";
+import roomsImg from "@/assets/szobák.jpeg";
+import terraceImg from "@/assets/terasz.jpeg";
+import terraceAltImg from "@/assets/terasz2.jpeg";
+import tokajCellarImg from "@/assets/tokaj-cellar.jpg";
+import tokajTownImg from "@/assets/tokaj-town.jpg";
+import courtyardImg from "@/assets/udvar.jpeg";
 import { Reveal, SectionHeading } from "./section";
 import { cn } from "@/lib/utils";
 
 const DEFAULTS = [
-  { id: "d1", url: gardenview1, title: "Kert és környezet", category: "apartman" },
-  { id: "d2", url: apartmentLiving, title: "Nappali panorámaablakkal", category: "apartman" },
-  { id: "d3", url: apartmentBedroom, title: "Hálószoba", category: "apartman" },
-  { id: "d4", url: apartmentBath, title: "Fürdőszoba", category: "apartman" },
-  { id: "d5", url: nature, title: "Tokaji természet", category: "tokaj" },
-  { id: "d6", url: outsidewine1, title: "Borturizmus és táj", category: "tokaj" },
-  { id: "d7", url: outsidewine2, title: "Naplementés környék", category: "tokaj" },
-  { id: "d8", url: nature2, title: "Kert és hegyoldal", category: "tokaj" },
-  { id: "d9", url: nature3, title: "Nyugodt környezet", category: "tokaj" },
-  { id: "d10", url: heroTokaj, title: "Tokaji szőlőhegy", category: "tokaj" },
-  { id: "d11", url: tokajCellar, title: "Pince és aszú", category: "tokaj" },
-  { id: "d12", url: tokajTown, title: "Tokaj városa", category: "tokaj" },
+  { id: "d01", url: bejaratImg, title: "Bejárat", category: "apartman" },
+  { id: "d02", url: festivalKatlanImg, title: "Festival-katlan", category: "tokaj" },
+  { id: "d03", url: furdőszobaImg, title: "Fürdőszoba", category: "apartman" },
+  { id: "d04", url: furdőszobaAltImg, title: "Fürdőszoba 2", category: "apartman" },
+  { id: "d05", url: gardenViewImg, title: "Kert és környezet", category: "apartman" },
+  { id: "d06", url: gyerekSarokImg, title: "Gyereksarok", category: "apartman" },
+  { id: "d07", url: heroTokajImg, title: "Tokaji szőlőhegy", category: "tokaj" },
+  { id: "d08", url: kanapeImg, title: "Kanapé", category: "apartman" },
+  { id: "d09", url: kitchenImg, title: "Konyha", category: "apartman" },
+  { id: "d10", url: kitchenAltImg, title: "Konyha 2", category: "apartman" },
+  { id: "d11", url: livingRoomImg, title: "Nappali", category: "apartman" },
+  { id: "d12", url: natureImg, title: "Tokaji természet", category: "tokaj" },
+  { id: "d13", url: nature2Img, title: "Kert és hegyoldal", category: "tokaj" },
+  { id: "d14", url: nature3Img, title: "Nyugodt környezet", category: "tokaj" },
+  { id: "d15", url: outsideWine1Img, title: "Borturizmus és táj", category: "tokaj" },
+  { id: "d16", url: outsideWine2Img, title: "Naplementés környék", category: "tokaj" },
+  { id: "d17", url: wardrobeImg, title: "Szekrény", category: "apartman" },
+  { id: "d18", url: roomsImg, title: "Szobák", category: "apartman" },
+  { id: "d19", url: terraceImg, title: "Terasz", category: "apartman" },
+  { id: "d20", url: terraceAltImg, title: "Terasz 2", category: "apartman" },
+  { id: "d21", url: tokajCellarImg, title: "Pince és aszú", category: "tokaj" },
+  { id: "d22", url: tokajTownImg, title: "Tokaj városa", category: "tokaj" },
+  { id: "d23", url: courtyardImg, title: "Udvar", category: "apartman" },
 ];
 
 export function GallerySection() {
@@ -53,7 +75,9 @@ export function GallerySection() {
         setLightboxIndex((prev) => (prev === null ? 0 : (prev + 1) % images.length));
       }
       if (event.key === "ArrowLeft") {
-        setLightboxIndex((prev) => (prev === null ? images.length - 1 : (prev - 1 + images.length) % images.length));
+        setLightboxIndex((prev) =>
+          prev === null ? images.length - 1 : (prev - 1 + images.length) % images.length,
+        );
       }
       if (event.key === "Escape") {
         setLightboxIndex(null);

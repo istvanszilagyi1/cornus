@@ -1,9 +1,15 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import { DEFAULT_PRICING_SETTINGS, DEFAULT_SPECIAL_PERIODS, estimateBookingRevenueFromBooking } from "./pricing.ts";
+import {
+  DEFAULT_PRICING_SETTINGS,
+  DEFAULT_SPECIAL_PERIODS,
+  estimateBookingRevenueFromBooking,
+} from "./pricing.ts";
 
-test("estimateBookingRevenueFromBooking matches the actual nightly pricing rules", () => {
+test("booking is enabled by default and pricing rules stay intact", () => {
+  assert.equal(DEFAULT_PRICING_SETTINGS.booking_enabled, true);
+
   const settings = {
     ...DEFAULT_PRICING_SETTINGS,
     adult_price: 30000,

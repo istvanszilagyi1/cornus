@@ -10,6 +10,7 @@ export type PricingSettings = {
   ifa_per_adult: number;
   min_nights_default: number;
   single_night_surcharge_percent: number;
+  booking_enabled: boolean;
   created_at?: string;
   updated_at?: string;
 };
@@ -53,6 +54,7 @@ export const DEFAULT_PRICING_SETTINGS: PricingSettings = {
   ifa_per_adult: 750,
   min_nights_default: 2,
   single_night_surcharge_percent: 50,
+  booking_enabled: true,
 };
 
 export const DEFAULT_SPECIAL_PERIODS: PricingSpecialPeriod[] = [
@@ -155,7 +157,10 @@ export function estimateBookingRevenueFromBooking(
 
   const nights = Math.max(1, differenceInCalendarDays(end, start));
   const adultGuests = Math.max(Number(booking.adults ?? booking.guests ?? 1), 1);
-  const childGuests = Math.max(Number(booking.children ?? Math.max(0, Number(booking.guests ?? adultGuests) - adultGuests)), 0);
+  const childGuests = Math.max(
+    Number(booking.children ?? Math.max(0, Number(booking.guests ?? adultGuests) - adultGuests)),
+    0,
+  );
   const applicablePeriod = getApplicableSpecialPeriod({ from: start, to: end }, periods);
   const nightlyAdultRate = applicablePeriod?.adult_price ?? settings.adult_price;
   const nightlyChildRate = applicablePeriod?.child_price ?? settings.child_price;
@@ -163,7 +168,8 @@ export function estimateBookingRevenueFromBooking(
   const roomSubtotal = nights * (adultGuests * nightlyAdultRate + childGuests * nightlyChildRate);
   const ifaSubtotal = adultGuests * nights * settings.ifa_per_adult;
   const dogSubtotal = (booking.dogs ?? 0) * nights * settings.dog_price;
-  const singleNightSurcharge = nights === 1 ? roomSubtotal * (settings.single_night_surcharge_percent / 100) : 0;
+  const singleNightSurcharge =
+    nights === 1 ? roomSubtotal * (settings.single_night_surcharge_percent / 100) : 0;
 
   return roomSubtotal + ifaSubtotal + dogSubtotal + singleNightSurcharge;
 }
@@ -194,7 +200,8 @@ export function getBookingPricingSummary({
   const roomSubtotal = nights * (adultGuests * nightlyAdultRate + childGuests * nightlyChildRate);
   const ifaSubtotal = adultGuests * nights * settings.ifa_per_adult;
   const dogSubtotal = dogs * nights * settings.dog_price;
-  const singleNightSurcharge = nights === 1 ? roomSubtotal * (settings.single_night_surcharge_percent / 100) : 0;
+  const singleNightSurcharge =
+    nights === 1 ? roomSubtotal * (settings.single_night_surcharge_percent / 100) : 0;
   const total = roomSubtotal + ifaSubtotal + dogSubtotal + singleNightSurcharge;
 
   return {

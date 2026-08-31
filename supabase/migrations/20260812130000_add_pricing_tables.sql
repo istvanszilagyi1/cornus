@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS public.pricing_settings (
   ifa_per_adult integer NOT NULL DEFAULT 750,
   min_nights_default integer NOT NULL DEFAULT 2,
   single_night_surcharge_percent integer NOT NULL DEFAULT 50,
+  booking_enabled boolean NOT NULL DEFAULT true,
   created_at timestamptz NOT NULL DEFAULT now(),
   updated_at timestamptz NOT NULL DEFAULT now()
 );
@@ -63,7 +64,8 @@ INSERT INTO public.pricing_settings (
   dog_price,
   ifa_per_adult,
   min_nights_default,
-  single_night_surcharge_percent
+  single_night_surcharge_percent,
+  booking_enabled
 )
 VALUES (
   'default',
@@ -73,7 +75,8 @@ VALUES (
   7000,
   750,
   2,
-  50
+  50,
+  true
 )
 ON CONFLICT (id) DO UPDATE SET
   adult_price = EXCLUDED.adult_price,
@@ -83,6 +86,7 @@ ON CONFLICT (id) DO UPDATE SET
   ifa_per_adult = EXCLUDED.ifa_per_adult,
   min_nights_default = EXCLUDED.min_nights_default,
   single_night_surcharge_percent = EXCLUDED.single_night_surcharge_percent,
+  booking_enabled = EXCLUDED.booking_enabled,
   updated_at = now();
 
 INSERT INTO public.pricing_special_periods (name, start_date, end_date, min_nights, adult_price, child_price, is_active)

@@ -5,14 +5,40 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { format, differenceInCalendarDays } from "date-fns";
 import { hu } from "date-fns/locale";
 import { toast } from "sonner";
-import { BarChart3, CalendarDays, Check, Clock3, LogOut, TrendingUp, Trash2, Users, X } from "lucide-react";
-import { Area, Bar, CartesianGrid, ComposedChart, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { DEFAULT_PRICING_SETTINGS, DEFAULT_SPECIAL_PERIODS, estimateBookingRevenueFromBooking, getBookingPricingSummary } from "@/lib/pricing";
+import {
+  BarChart3,
+  CalendarDays,
+  Check,
+  Clock3,
+  LogOut,
+  TrendingUp,
+  Trash2,
+  Users,
+  X,
+} from "lucide-react";
+import {
+  Area,
+  Bar,
+  CartesianGrid,
+  ComposedChart,
+  Line,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
+import {
+  DEFAULT_PRICING_SETTINGS,
+  DEFAULT_SPECIAL_PERIODS,
+  estimateBookingRevenueFromBooking,
+  getBookingPricingSummary,
+} from "@/lib/pricing";
 import { supabase } from "@/integrations/supabase/client";
 import { getAnalyticsEvents, type AnalyticsEvent } from "@/lib/analytics";
 import { getMyRole } from "@/lib/admin.functions";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
@@ -126,10 +152,7 @@ function DashboardPanel() {
   const { data: pricingSettings = DEFAULT_PRICING_SETTINGS } = useQuery({
     queryKey: ["dashboard-pricing-settings"],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("pricing_settings")
-        .select("*")
-        .maybeSingle();
+      const { data, error } = await supabase.from("pricing_settings").select("*").maybeSingle();
 
       if (error && error.code !== "PGRST116") throw error;
       return data ? { ...DEFAULT_PRICING_SETTINGS, ...data } : { ...DEFAULT_PRICING_SETTINGS };
@@ -137,7 +160,10 @@ function DashboardPanel() {
   });
 
   const monthlyPageViews = useMemo(() => createMonthlySeries(analytics, "page_view"), [analytics]);
-  const monthlyMetrics = useMemo(() => createMonthlyRevenueSeries(bookings, pricingSettings), [bookings, pricingSettings]);
+  const monthlyMetrics = useMemo(
+    () => createMonthlyRevenueSeries(bookings, pricingSettings),
+    [bookings, pricingSettings],
+  );
   const upcomingArrivals = useMemo(() => {
     const now = new Date();
     return bookings
@@ -169,18 +195,42 @@ function DashboardPanel() {
   return (
     <div className="space-y-6">
       <div className="grid gap-4 md:grid-cols-4">
-        <MetricCard label="Összes foglalás" value={summary.totalBookings.toString()} icon={<BarChart3 className="size-4" />} accent="bg-primary/10 text-primary" />
-        <MetricCard label="Várható bevétel" value={formatMoney(summary.expectedRevenue)} icon={<TrendingUp className="size-4" />} accent="bg-emerald-500/10 text-emerald-500" />
-        <MetricCard label="Látogatók" value={summary.pageViews.toLocaleString()} icon={<Users className="size-4" />} accent="bg-sky-500/10 text-sky-500" />
-        <MetricCard label="Konverziós ráta" value={`${summary.conversionRate.toFixed(1)}%`} icon={<TrendingUp className="size-4" />} accent="bg-violet-500/10 text-violet-500" />
+        <MetricCard
+          label="Összes foglalás"
+          value={summary.totalBookings.toString()}
+          icon={<BarChart3 className="size-4" />}
+          accent="bg-primary/10 text-primary"
+        />
+        <MetricCard
+          label="Várható bevétel"
+          value={formatMoney(summary.expectedRevenue)}
+          icon={<TrendingUp className="size-4" />}
+          accent="bg-emerald-500/10 text-emerald-500"
+        />
+        <MetricCard
+          label="Látogatók"
+          value={summary.pageViews.toLocaleString()}
+          icon={<Users className="size-4" />}
+          accent="bg-sky-500/10 text-sky-500"
+        />
+        <MetricCard
+          label="Konverziós ráta"
+          value={`${summary.conversionRate.toFixed(1)}%`}
+          icon={<TrendingUp className="size-4" />}
+          accent="bg-violet-500/10 text-violet-500"
+        />
       </div>
 
       <div className="grid gap-6 xl:grid-cols-[1.4fr_0.8fr]">
         <div className={cn(panel, "p-4 sm:p-6")}>
           <div className="mb-4 flex items-center justify-between">
             <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Látogatottság</p>
-              <h2 className="mt-2 font-display text-2xl text-foreground">Havi oldalmegtekintések</h2>
+              <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                Látogatottság
+              </p>
+              <h2 className="mt-2 font-display text-2xl text-foreground">
+                Havi oldalmegtekintések
+              </h2>
             </div>
           </div>
           <ChartContainer
@@ -195,7 +245,14 @@ function DashboardPanel() {
                 <XAxis dataKey="label" tickLine={false} axisLine={false} />
                 <YAxis allowDecimals={false} tickLine={false} axisLine={false} />
                 <Tooltip content={<ChartTooltipContent />} />
-                <Area type="monotone" dataKey="pageViews" fill="hsl(var(--chart-1))" fillOpacity={0.2} stroke="hsl(var(--chart-1))" strokeWidth={2} />
+                <Area
+                  type="monotone"
+                  dataKey="pageViews"
+                  fill="hsl(var(--chart-1))"
+                  fillOpacity={0.2}
+                  stroke="hsl(var(--chart-1))"
+                  strokeWidth={2}
+                />
               </ComposedChart>
             </ResponsiveContainer>
           </ChartContainer>
@@ -220,12 +277,37 @@ function DashboardPanel() {
                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                 <XAxis dataKey="label" tickLine={false} axisLine={false} />
                 <YAxis yAxisId="left" allowDecimals={false} tickLine={false} axisLine={false} />
-                <YAxis yAxisId="right" orientation="right" tickFormatter={(value) => formatCompactMoney(value)} tickLine={false} axisLine={false} />
-                <Tooltip
-                  content={<ChartTooltipContent formatter={(value: number, name: string) => [name === "revenue" ? formatMoney(Number(value)) : value.toLocaleString(), name]} />}
+                <YAxis
+                  yAxisId="right"
+                  orientation="right"
+                  tickFormatter={(value) => formatCompactMoney(value)}
+                  tickLine={false}
+                  axisLine={false}
                 />
-                <Bar yAxisId="left" dataKey="bookings" fill="hsl(var(--chart-2))" radius={[4, 4, 0, 0]} />
-                <Line yAxisId="right" type="monotone" dataKey="revenue" stroke="hsl(var(--chart-3))" strokeWidth={3} dot={{ r: 4 }} />
+                <Tooltip
+                  content={
+                    <ChartTooltipContent
+                      formatter={(value: number, name: string) => [
+                        name === "revenue" ? formatMoney(Number(value)) : value.toLocaleString(),
+                        name,
+                      ]}
+                    />
+                  }
+                />
+                <Bar
+                  yAxisId="left"
+                  dataKey="bookings"
+                  fill="hsl(var(--chart-2))"
+                  radius={[4, 4, 0, 0]}
+                />
+                <Line
+                  yAxisId="right"
+                  type="monotone"
+                  dataKey="revenue"
+                  stroke="hsl(var(--chart-3))"
+                  strokeWidth={3}
+                  dot={{ r: 4 }}
+                />
               </ComposedChart>
             </ResponsiveContainer>
           </ChartContainer>
@@ -238,7 +320,9 @@ function DashboardPanel() {
             <CalendarDays className="size-4" />
           </div>
           <div>
-            <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Következő érkezések</p>
+            <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+              Következő érkezések
+            </p>
             <h2 className="mt-1 font-display text-2xl text-foreground">Érkezések és távozások</h2>
           </div>
         </div>
@@ -248,11 +332,20 @@ function DashboardPanel() {
         ) : (
           <div className="space-y-3">
             {upcomingArrivals.map((booking) => (
-              <div key={booking.id} className="flex items-center justify-between gap-4 rounded-sm border border-border/70 bg-card/40 px-4 py-3">
+              <div
+                key={booking.id}
+                className="flex items-center justify-between gap-4 rounded-sm border border-border/70 bg-card/40 px-4 py-3"
+              >
                 <div>
                   <p className="font-medium text-foreground">{booking.guest_name}</p>
                   <p className="mt-1 text-sm text-muted-foreground">
-                    {format(new Date(`${booking.check_in}T12:00:00`), "yyyy. MMM d.", { locale: hu })} – {format(new Date(`${booking.check_out}T12:00:00`), "yyyy. MMM d.", { locale: hu })}
+                    {format(new Date(`${booking.check_in}T12:00:00`), "yyyy. MMM d.", {
+                      locale: hu,
+                    })}{" "}
+                    –{" "}
+                    {format(new Date(`${booking.check_out}T12:00:00`), "yyyy. MMM d.", {
+                      locale: hu,
+                    })}
                   </p>
                 </div>
                 <div className="flex items-center gap-2 text-xs uppercase tracking-[0.14em] text-muted-foreground">
@@ -284,7 +377,9 @@ function MetricCard({
         <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">{label}</p>
         <p className="mt-3 font-display text-3xl text-foreground">{value}</p>
       </div>
-      <div className={cn("flex size-10 items-center justify-center rounded-sm", accent)}>{icon}</div>
+      <div className={cn("flex size-10 items-center justify-center rounded-sm", accent)}>
+        {icon}
+      </div>
     </div>
   );
 }
@@ -324,7 +419,11 @@ function createMonthlySeries(events: AnalyticsEvent[], type: "page_view") {
     month.setDate(1);
     month.setMonth(month.getMonth() - (5 - index));
     const label = format(month, "yyyy. MMM");
-    return { label, monthKey: `${month.getFullYear()}-${String(month.getMonth() + 1).padStart(2, "0")}`, pageViews: 0 };
+    return {
+      label,
+      monthKey: `${month.getFullYear()}-${String(month.getMonth() + 1).padStart(2, "0")}`,
+      pageViews: 0,
+    };
   });
 
   for (const event of events) {
@@ -340,7 +439,16 @@ function createMonthlySeries(events: AnalyticsEvent[], type: "page_view") {
 }
 
 function createMonthlyRevenueSeries(
-  bookings: Array<{ status?: string | null; check_in?: string; check_out?: string; adults?: number | null; children?: number | null; guests?: number | null; dogs?: number | null; created_at?: string; }>,
+  bookings: Array<{
+    status?: string | null;
+    check_in?: string;
+    check_out?: string;
+    adults?: number | null;
+    children?: number | null;
+    guests?: number | null;
+    dogs?: number | null;
+    created_at?: string;
+  }>,
   settings: typeof DEFAULT_PRICING_SETTINGS,
 ) {
   const lastMonths = Array.from({ length: 6 }, (_, index) => {
@@ -435,11 +543,12 @@ function BookingsPanel() {
 
         // Ha elutasítunk valamit, töröljük a naptárból is a hozzátartozó lezárást!
         if (status === "rejected" && checkIn && checkOut) {
-          const { error: unblockError } = await supabase.from("blocked_dates")
+          const { error: unblockError } = await supabase
+            .from("blocked_dates")
             .delete()
             .eq("start_date", checkIn)
             .eq("end_date", checkOut);
-          
+
           if (unblockError) {
             console.error("Nem sikerült törölni a lezárást elutasításkor:", unblockError);
           }
@@ -447,7 +556,10 @@ function BookingsPanel() {
 
         if (status === "confirmed" || status === "rejected") {
           const bookingSummary = getBookingPricingSummary({
-            range: checkIn && checkOut ? { from: new Date(`${checkIn}T12:00:00`), to: new Date(`${checkOut}T12:00:00`) } : undefined,
+            range:
+              checkIn && checkOut
+                ? { from: new Date(`${checkIn}T12:00:00`), to: new Date(`${checkOut}T12:00:00`) }
+                : undefined,
             adults: Number(adults ?? 1),
             childAges: Array(Number(children ?? 0)).fill(0),
             dogs: Number(dogs ?? 0),
@@ -478,7 +590,8 @@ function BookingsPanel() {
             single_night_surcharge: bookingSummary.singleNightSurcharge,
             nightly_adult_rate: bookingSummary.nightlyAdultRate,
             nightly_child_rate: bookingSummary.nightlyChildRate,
-            payment_note: "A foglalás teljes költségének 50%-át kell átutalni a megadott bankszámlára, a foglalási névvel megjelölve.",
+            payment_note:
+              "A foglalás teljes költségének 50%-át kell átutalni a megadott bankszámlára, a foglalási névvel megjelölve.",
           };
 
           if (!payload.email || !payload.check_in || !payload.check_out) {
@@ -493,8 +606,13 @@ function BookingsPanel() {
             });
 
             if (!emailResponse.ok) {
-              const payloadResponse = (await emailResponse.json().catch(() => ({}))) as { error?: string };
-              console.error("admin booking email send failed", payloadResponse.error ?? "unknown error");
+              const payloadResponse = (await emailResponse.json().catch(() => ({}))) as {
+                error?: string;
+              };
+              console.error(
+                "admin booking email send failed",
+                payloadResponse.error ?? "unknown error",
+              );
             }
           } catch (emailError) {
             console.error("admin booking email send failed", emailError);
@@ -515,15 +633,25 @@ function BookingsPanel() {
   });
 
   const remove = useMutation({
-    mutationFn: async (b: any) => {
+    mutationFn: async (b: {
+      id: string;
+      status?: string | null;
+      check_in?: string | null;
+      check_out?: string | null;
+    }) => {
       // Ha nincs elutasítva, akkor csak elutasítjuk és kitöröljük a naptárból
       if (b.status !== "rejected") {
         if (b.check_in && b.check_out) {
-          await supabase.from("blocked_dates").delete()
+          await supabase
+            .from("blocked_dates")
+            .delete()
             .eq("start_date", b.check_in)
             .eq("end_date", b.check_out);
         }
-        const { error } = await supabase.from("bookings").update({ status: "rejected" }).eq("id", b.id);
+        const { error } = await supabase
+          .from("bookings")
+          .update({ status: "rejected" })
+          .eq("id", b.id);
         if (error) throw error;
       } else {
         // Ha már elutasított, véglegesen töröljük az adatbázisból
@@ -569,7 +697,9 @@ function BookingsPanel() {
   return (
     <div className="space-y-4">
       {bookings.map((b) => {
-        const isLegacyBooking = b.status !== "pending" && differenceInCalendarDays(new Date(), new Date(b.check_out)) > 30;
+        const isLegacyBooking =
+          b.status !== "pending" &&
+          differenceInCalendarDays(new Date(), new Date(b.check_out)) > 30;
 
         return (
           <div key={b.id} className={cn(panel, "flex flex-wrap items-start justify-between gap-6")}>
@@ -578,7 +708,9 @@ function BookingsPanel() {
                 {b.personal_data_redacted_at ? "Anonimizált vendég" : b.guest_name}
               </p>
               <p className="mt-1 text-sm text-muted-foreground">
-                {b.personal_data_redacted_at ? "Személyes adatok anonimizálva" : `${b.email}${b.phone ? ` · ${b.phone}` : ""}`}
+                {b.personal_data_redacted_at
+                  ? "Személyes adatok anonimizálva"
+                  : `${b.email}${b.phone ? ` · ${b.phone}` : ""}`}
               </p>
               <p className="mt-3 text-sm text-foreground">
                 {format(new Date(b.check_in), "yyyy. MMM d.", { locale: hu })} –{" "}
@@ -590,16 +722,16 @@ function BookingsPanel() {
             </div>
 
             <div className="flex flex-col items-end gap-3">
-            <span
-              className={cn(
-                "rounded-sm px-3 py-1 text-[0.65rem] tracking-[0.2em] uppercase",
-                b.status === "confirmed" && "bg-primary/15 text-primary",
-                b.status === "pending" && "bg-secondary text-muted-foreground",
-                b.status === "rejected" && "bg-destructive/15 text-destructive",
-              )}
-            >
-              {STATUS_LABEL[b.status] ?? b.status}
-            </span>
+              <span
+                className={cn(
+                  "rounded-sm px-3 py-1 text-[0.65rem] tracking-[0.2em] uppercase",
+                  b.status === "confirmed" && "bg-primary/15 text-primary",
+                  b.status === "pending" && "bg-secondary text-muted-foreground",
+                  b.status === "rejected" && "bg-destructive/15 text-destructive",
+                )}
+              >
+                {STATUS_LABEL[b.status] ?? b.status}
+              </span>
               <div className="flex flex-wrap gap-2">
                 {!b.personal_data_redacted_at && isLegacyBooking && (
                   <button
@@ -674,6 +806,7 @@ type PricingSettingsForm = {
   ifa_per_adult: number;
   min_nights_default: number;
   single_night_surcharge_percent: number;
+  booking_enabled: boolean;
 };
 
 function PricingSettingsPanel() {
@@ -717,6 +850,7 @@ function PricingSettingsPanel() {
           settingsData.single_night_surcharge_percent ??
             DEFAULT_PRICING_SETTINGS.single_night_surcharge_percent,
         ),
+        booking_enabled: settingsData.booking_enabled ?? DEFAULT_PRICING_SETTINGS.booking_enabled,
       });
     }
   }, [settingsData]);
@@ -732,7 +866,9 @@ function PricingSettingsPanel() {
         ...values,
         updated_at: new Date().toISOString(),
       };
-      const { error } = await supabase.from("pricing_settings").upsert(payload, { onConflict: "id" });
+      const { error } = await supabase
+        .from("pricing_settings")
+        .upsert(payload, { onConflict: "id" });
       if (error) throw error;
     },
     onSuccess: () => {
@@ -749,7 +885,10 @@ function PricingSettingsPanel() {
         updated_at: new Date().toISOString(),
       };
       if (period.id) {
-        const { error } = await supabase.from("pricing_special_periods").update(payload).eq("id", period.id);
+        const { error } = await supabase
+          .from("pricing_special_periods")
+          .update(payload)
+          .eq("id", period.id);
         if (error) throw error;
         return;
       }
@@ -804,7 +943,9 @@ function PricingSettingsPanel() {
               type="number"
               min={0}
               value={settings.adult_price}
-              onChange={(e) => setSettings((prev) => ({ ...prev, adult_price: Number(e.target.value) || 0 }))}
+              onChange={(e) =>
+                setSettings((prev) => ({ ...prev, adult_price: Number(e.target.value) || 0 }))
+              }
               className="mt-2"
             />
           </div>
@@ -815,7 +956,9 @@ function PricingSettingsPanel() {
               type="number"
               min={0}
               value={settings.child_price}
-              onChange={(e) => setSettings((prev) => ({ ...prev, child_price: Number(e.target.value) || 0 }))}
+              onChange={(e) =>
+                setSettings((prev) => ({ ...prev, child_price: Number(e.target.value) || 0 }))
+              }
               className="mt-2"
             />
           </div>
@@ -826,7 +969,9 @@ function PricingSettingsPanel() {
               type="number"
               min={0}
               value={settings.toddler_price}
-              onChange={(e) => setSettings((prev) => ({ ...prev, toddler_price: Number(e.target.value) || 0 }))}
+              onChange={(e) =>
+                setSettings((prev) => ({ ...prev, toddler_price: Number(e.target.value) || 0 }))
+              }
               className="mt-2"
             />
           </div>
@@ -837,7 +982,9 @@ function PricingSettingsPanel() {
               type="number"
               min={0}
               value={settings.dog_price}
-              onChange={(e) => setSettings((prev) => ({ ...prev, dog_price: Number(e.target.value) || 0 }))}
+              onChange={(e) =>
+                setSettings((prev) => ({ ...prev, dog_price: Number(e.target.value) || 0 }))
+              }
               className="mt-2"
             />
           </div>
@@ -848,7 +995,9 @@ function PricingSettingsPanel() {
               type="number"
               min={0}
               value={settings.ifa_per_adult}
-              onChange={(e) => setSettings((prev) => ({ ...prev, ifa_per_adult: Number(e.target.value) || 0 }))}
+              onChange={(e) =>
+                setSettings((prev) => ({ ...prev, ifa_per_adult: Number(e.target.value) || 0 }))
+              }
               className="mt-2"
             />
           </div>
@@ -859,7 +1008,12 @@ function PricingSettingsPanel() {
               type="number"
               min={1}
               value={settings.min_nights_default}
-              onChange={(e) => setSettings((prev) => ({ ...prev, min_nights_default: Number(e.target.value) || 1 }))}
+              onChange={(e) =>
+                setSettings((prev) => ({
+                  ...prev,
+                  min_nights_default: Number(e.target.value) || 1,
+                }))
+              }
               className="mt-2"
             />
           </div>
@@ -877,6 +1031,27 @@ function PricingSettingsPanel() {
                 }))
               }
               className="mt-2"
+            />
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-4 rounded-sm border border-border/70 bg-background/40 p-4 md:flex-row md:items-center md:justify-between">
+          <div>
+            <p className="text-sm font-medium text-foreground">Foglalási időszak</p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Kapcsolja be vagy ki a weboldalon megjelenő foglalási űrlapot.
+            </p>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
+              {settings.booking_enabled ? "Bekapcsolva" : "Kikapcsolva"}
+            </span>
+            <Switch
+              checked={settings.booking_enabled}
+              onCheckedChange={(value) =>
+                setSettings((prev) => ({ ...prev, booking_enabled: value }))
+              }
+              aria-label="Foglalás engedélyezése"
             />
           </div>
         </div>
@@ -901,7 +1076,10 @@ function PricingSettingsPanel() {
 
         <div className="space-y-4">
           {periods.map((period, index) => (
-            <div key={period.id ?? `${period.name}-${index}`} className="rounded-sm border border-border/70 bg-card/40 p-4">
+            <div
+              key={period.id ?? `${period.name}-${index}`}
+              className="rounded-sm border border-border/70 bg-card/40 p-4"
+            >
               <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-6">
                 <div className="xl:col-span-2">
                   <Label htmlFor={`period-name-${index}`}>Név</Label>
@@ -939,7 +1117,9 @@ function PricingSettingsPanel() {
                     type="number"
                     min={1}
                     value={period.min_nights}
-                    onChange={(e) => updatePeriodField(index, "min_nights", Number(e.target.value) || 1)}
+                    onChange={(e) =>
+                      updatePeriodField(index, "min_nights", Number(e.target.value) || 1)
+                    }
                     className="mt-2"
                   />
                 </div>
@@ -948,7 +1128,9 @@ function PricingSettingsPanel() {
                   <select
                     id={`period-active-${index}`}
                     value={period.is_active === false ? "false" : "true"}
-                    onChange={(e) => updatePeriodField(index, "is_active", e.target.value === "true")}
+                    onChange={(e) =>
+                      updatePeriodField(index, "is_active", e.target.value === "true")
+                    }
                     className="mt-2 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                   >
                     <option value="true">Igen</option>
@@ -962,7 +1144,9 @@ function PricingSettingsPanel() {
                     type="number"
                     min={0}
                     value={period.adult_price}
-                    onChange={(e) => updatePeriodField(index, "adult_price", Number(e.target.value) || 0)}
+                    onChange={(e) =>
+                      updatePeriodField(index, "adult_price", Number(e.target.value) || 0)
+                    }
                     className="mt-2"
                   />
                 </div>
@@ -973,7 +1157,9 @@ function PricingSettingsPanel() {
                     type="number"
                     min={0}
                     value={period.child_price}
-                    onChange={(e) => updatePeriodField(index, "child_price", Number(e.target.value) || 0)}
+                    onChange={(e) =>
+                      updatePeriodField(index, "child_price", Number(e.target.value) || 0)
+                    }
                     className="mt-2"
                   />
                 </div>
@@ -1120,7 +1306,12 @@ function CalendarPanel() {
         </div>
         <div>
           <Label htmlFor="reason">Megjegyzés</Label>
-          <Input id="reason" name="reason" className="mt-2" placeholder="Karbantartás, saját használat…" />
+          <Input
+            id="reason"
+            name="reason"
+            className="mt-2"
+            placeholder="Karbantartás, saját használat…"
+          />
         </div>
         <button type="submit" className={btnPrimary}>
           Blokkolás
@@ -1144,12 +1335,21 @@ function CalendarPanel() {
           ) : (
             <div className="space-y-3">
               {upcomingBookings.map((booking) => (
-                <div key={booking.id} className="rounded-sm border border-border/70 bg-card/40 px-4 py-3">
+                <div
+                  key={booking.id}
+                  className="rounded-sm border border-border/70 bg-card/40 px-4 py-3"
+                >
                   <div className="flex items-center justify-between gap-4">
                     <div>
                       <p className="font-medium text-foreground">{booking.guest_name}</p>
                       <p className="mt-1 text-sm text-muted-foreground">
-                        {format(new Date(`${booking.check_in}T12:00:00`), "yyyy. MMM d.", { locale: hu })} – {format(new Date(`${booking.check_out}T12:00:00`), "yyyy. MMM d.", { locale: hu })}
+                        {format(new Date(`${booking.check_in}T12:00:00`), "yyyy. MMM d.", {
+                          locale: hu,
+                        })}{" "}
+                        –{" "}
+                        {format(new Date(`${booking.check_out}T12:00:00`), "yyyy. MMM d.", {
+                          locale: hu,
+                        })}
                       </p>
                     </div>
                     <span className="rounded-sm bg-primary/10 px-2 py-1 text-[0.6rem] uppercase tracking-[0.18em] text-primary">
@@ -1163,7 +1363,9 @@ function CalendarPanel() {
         </div>
 
         <div className="space-y-3">
-          <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Blokkolt időszakok</p>
+          <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+            Blokkolt időszakok
+          </p>
           {(data ?? []).length === 0 && (
             <p className="text-sm text-muted-foreground">Nincs blokkolt időszak.</p>
           )}
@@ -1189,4 +1391,3 @@ function CalendarPanel() {
     </div>
   );
 }
-
