@@ -1,10 +1,9 @@
 import { CalendarDays, ExternalLink, MapPin } from "lucide-react";
-import festivalKatlan from "@/assets/festival-katlan.jpg";
 import tokajCellar from "@/assets/tokaj-cellar.jpg";
 import tokajTown from "@/assets/tokaj-town.jpg";
 import { Reveal, SectionHeading } from "./section";
 
-const FALLBACK_IMAGES = [festivalKatlan, tokajCellar, tokajTown];
+const FALLBACK_IMAGES = [tokajCellar, tokajTown];
 
 const BASE_PROGRAMS = [
   {
@@ -34,8 +33,6 @@ export function ProgramsSection() {
   return (
     <section id="programok" className="relative border-t border-border/50 py-28 md:py-40">
       <div className="mx-auto max-w-7xl px-6">
-        
-        {/* Felső rész: Fesztiválkatlan dinamikus programok */}
         <div className="flex flex-wrap items-end justify-between gap-8 mb-12">
           <SectionHeading
             eyebrow="Aktuális"
@@ -54,7 +51,6 @@ export function ProgramsSection() {
           </Reveal>
         </div>
 
-        {/* Új, letisztult link a kártyák helyett */}
         <div className="mb-24">
           <Reveal delay={90}>
             <a
@@ -70,7 +66,6 @@ export function ProgramsSection() {
           </Reveal>
         </div>
 
-        {/* Alsó rész: Fix, állandó helyi programok */}
         <div className="flex flex-wrap items-end justify-between gap-8 mt-16 mb-12 border-t border-border/50 pt-16">
           <SectionHeading
             eyebrow="Állandó"

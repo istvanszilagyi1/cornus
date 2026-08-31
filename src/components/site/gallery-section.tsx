@@ -4,7 +4,6 @@ import { useServerFn } from "@tanstack/react-start";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { listGallery } from "@/lib/gallery.functions";
 import bejaratImg from "@/assets/bejárat.jpeg";
-import festivalKatlanImg from "@/assets/festival-katlan.jpg";
 import furdőszobaImg from "@/assets/fürdőszoba.jpeg";
 import furdőszobaAltImg from "@/assets/fürdőszoba2.jpeg";
 import gardenViewImg from "@/assets/gardenview1.jpeg";
@@ -31,8 +30,7 @@ import { cn } from "@/lib/utils";
 
 const DEFAULTS = [
   { id: "d01", url: bejaratImg, title: "Bejárat", category: "apartman" },
-  { id: "d02", url: festivalKatlanImg, title: "Festival-katlan", category: "tokaj" },
-  { id: "d03", url: furdőszobaImg, title: "Fürdőszoba", category: "apartman" },
+  { id: "d02", url: furdőszobaImg, title: "Fürdőszoba", category: "apartman" },
   { id: "d04", url: furdőszobaAltImg, title: "Fürdőszoba 2", category: "apartman" },
   { id: "d05", url: gardenViewImg, title: "Kert és környezet", category: "apartman" },
   { id: "d06", url: gyerekSarokImg, title: "Gyereksarok", category: "apartman" },
