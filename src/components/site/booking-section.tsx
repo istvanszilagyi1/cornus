@@ -356,7 +356,7 @@ export function BookingSection() {
                   </span>
                 </div>
                 <div className="flex items-center justify-between gap-3">
-                  <span>Első éjszaka felár</span>
+                  <span>1 éjszaka esetén felár</span>
                   <span className="font-medium text-foreground">
                     +{pricingSettings.single_night_surcharge_percent}%
                   </span>

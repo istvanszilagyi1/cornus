@@ -1018,7 +1018,7 @@ function PricingSettingsPanel() {
             />
           </div>
           <div>
-            <Label htmlFor="single-night-surcharge">1 éjszakás felár %</Label>
+            <Label htmlFor="single-night-surcharge">1 éjszaka esetén felár %</Label>
             <Input
               id="single-night-surcharge"
               type="number"
