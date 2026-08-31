@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import heroTokaj from "@/assets/hero-tokaj.jpg";
-import apartmentLiving from "@/assets/apartment-living.jpg";
+import nappali from "@/assets/nappali.jpeg";
 import tokajCellar from "@/assets/tokaj-cellar.jpg";
 import tokajTown from "@/assets/tokaj-town.jpg";
 import gardenview1 from "@/assets/gardenview1.jpeg";
@@ -16,7 +16,7 @@ const FRAMES = [
   { src: outsidewine1, alt: "Tokaj környező borospincék és szőlőhegyek" },
   { src: outsidewine2, alt: "A környék nyugodt, borostyán színű hangulata" },
   { src: nature, alt: "A tokaji táj északi, nyugodt része" },
-  { src: apartmentLiving, alt: "A Cornus Apartman nappalija panorámaablakkal" },
+  { src: nappali, alt: "A Cornus Apartman nappalija panorámaablakkal" },
   { src: tokajCellar, alt: "Tokaji pince hordókkal és aszúval" },
   { src: tokajTown, alt: "Tokaj városa a folyópartról" },
 ];

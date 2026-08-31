@@ -1,8 +1,7 @@
 import { BedDouble, Wifi, Coffee, Car, Wine, Sparkles } from "lucide-react";
-import apartmentLiving from "@/assets/apartment-living.jpg";
-import apartmentBedroom from "@/assets/apartment-bedroom.jpg";
 import gardenview1 from "@/assets/gardenview1.jpeg";
 import nature from "@/assets/nature.jpeg";
+import nappali from "@/assets/nappali.jpeg";
 import outsidewine1 from "@/assets/outsidewine1.jpeg";
 import outsidewine2 from "@/assets/outsidewine2.jpeg";
 import { Reveal, SectionHeading } from "./section";
@@ -143,8 +142,8 @@ export function AboutSection() {
               >
                 <div className="aspect-[4/5]">
                   <img
-                    src={nature}
-                    alt="Nyugodt tokaji természet részlet"
+                    src={nappali}
+                    alt="Cornus apartman nappali részlete"
                     loading="lazy"
                     width={1600}
                     height={1067}
@@ -160,7 +159,7 @@ export function AboutSection() {
               >
                 <div className="aspect-[4/5]">
                   <img
-                    src={outsidewine1}
+                    src={nature}
                     alt="Tokaji borvidék és szőlőhegy részlet"
                     loading="lazy"
                     width={1600}
