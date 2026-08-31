@@ -368,8 +368,7 @@ export function BookingSection() {
               </div>
 
               <div className="mt-8 rounded-sm border border-primary/30 bg-primary/5 p-4 text-sm text-foreground/90">
-                Ha szeretnéd lefoglalni a szállást, írj nekünk e-mailben vagy telefonon, és a
-                foglalás újranyitásakor azonnal visszajelzünk.
+                Foglalás hamarosan!
               </div>
             </div>
           </Reveal>
