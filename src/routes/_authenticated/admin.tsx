@@ -47,7 +47,7 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({
     meta: [
-      { title: "Admin – Cornus Apartman" },
+      { title: "Admin – Cornus Vendégház" },
       { name: "description", content: "Foglalások, naptár és bevételkezelés adminisztrációja." },
       { name: "robots", content: "noindex" },
     ],

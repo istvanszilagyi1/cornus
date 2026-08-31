@@ -292,87 +292,89 @@ export function BookingSection() {
           }
         />
 
-        {!bookingEnabled ? (
-          <Reveal className="mt-16">
-            <div className="mx-auto max-w-4xl rounded-sm border border-border/70 bg-card/50 p-6 shadow-[0_20px_80px_-40px_rgba(0,0,0,0.5)] sm:p-8">
-              <div className="mb-8 flex flex-col gap-4 border-b border-border/60 pb-6 sm:flex-row sm:items-end sm:justify-between">
-                <div>
-                  <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">
-                    Nyitvatartás
-                  </p>
-                  <h3 className="mt-2 font-display text-3xl text-foreground">Árjegyzék</h3>
-                </div>
+        <Reveal className="mt-16">
+          <div className="mx-auto max-w-4xl rounded-sm border border-border/70 bg-card/50 p-6 shadow-[0_20px_80px_-40px_rgba(0,0,0,0.5)] sm:p-8">
+            <div className="mb-8 flex flex-col gap-4 border-b border-border/60 pb-6 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">
+                  {bookingEnabled ? "Nyitott foglalás" : "Nyitvatartás"}
+                </p>
+                <h3 className="mt-2 font-display text-3xl text-foreground">Árjegyzék</h3>
+              </div>
+              {!bookingEnabled && (
                 <div className="rounded-sm border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-xs uppercase tracking-[0.18em] text-amber-600">
-                  Foglalás ideiglenesen zárva
+                  Foglalás zárva
                 </div>
-              </div>
+              )}
+            </div>
 
-              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-                <div className="rounded-sm border border-border/70 bg-background/60 p-4">
-                  <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                    Felnőtt
-                  </p>
-                  <p className="mt-3 font-display text-3xl text-foreground">
-                    {formatHuf(pricingSettings.adult_price)}
-                  </p>
-                  <p className="mt-1 text-sm text-muted-foreground">/ fő / éj</p>
-                </div>
-                <div className="rounded-sm border border-border/70 bg-background/60 p-4">
-                  <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Gyerek</p>
-                  <p className="mt-3 font-display text-3xl text-foreground">
-                    {formatHuf(pricingSettings.child_price)}
-                  </p>
-                  <p className="mt-1 text-sm text-muted-foreground">/ fő / éj</p>
-                </div>
-                <div className="rounded-sm border border-border/70 bg-background/60 p-4">
-                  <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                    Kisgyerek
-                  </p>
-                  <p className="mt-3 font-display text-3xl text-foreground">
-                    {formatHuf(pricingSettings.toddler_price)}
-                  </p>
-                  <p className="mt-1 text-sm text-muted-foreground">/ fő / éj</p>
-                </div>
-                <div className="rounded-sm border border-border/70 bg-background/60 p-4">
-                  <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Kutya</p>
-                  <p className="mt-3 font-display text-3xl text-foreground">
-                    {formatHuf(pricingSettings.dog_price)}
-                  </p>
-                  <p className="mt-1 text-sm text-muted-foreground">/ éj</p>
-                </div>
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              <div className="rounded-sm border border-border/70 bg-background/60 p-4">
+                <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                  Felnőtt · 14+ év
+                </p>
+                <p className="mt-3 font-display text-3xl text-foreground">
+                  {formatHuf(pricingSettings.adult_price)}
+                </p>
+                <p className="mt-1 text-sm text-muted-foreground">/ fő / éj</p>
               </div>
-
-              <div className="mt-8 grid gap-4 rounded-sm border border-border/70 bg-background/40 p-4 text-sm text-muted-foreground md:grid-cols-2">
-                <div className="flex items-center justify-between gap-3 border-b border-border/60 pb-3 md:border-none md:pb-0">
-                  <span>Minimális tartózkodás</span>
-                  <span className="font-medium text-foreground">
-                    {pricingSettings.min_nights_default} éjszaka
-                  </span>
-                </div>
-                <div className="flex items-center justify-between gap-3 border-b border-border/60 pb-3 md:border-none md:pb-0">
-                  <span>IFA / fő / éj</span>
-                  <span className="font-medium text-foreground">
-                    {formatHuf(pricingSettings.ifa_per_adult)}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between gap-3">
-                  <span>1 éjszaka esetén felár</span>
-                  <span className="font-medium text-foreground">
-                    +{pricingSettings.single_night_surcharge_percent}%
-                  </span>
-                </div>
-                <div className="flex items-center justify-between gap-3">
-                  <span>Előleg</span>
-                  <span className="font-medium text-primary">50%</span>
-                </div>
+              <div className="rounded-sm border border-border/70 bg-background/60 p-4">
+                <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                  Gyerek · 3–14 év
+                </p>
+                <p className="mt-3 font-display text-3xl text-foreground">
+                  {formatHuf(pricingSettings.child_price)}
+                </p>
+                <p className="mt-1 text-sm text-muted-foreground">/ fő / éj</p>
               </div>
-
-              <div className="mt-8 rounded-sm border border-primary/30 bg-primary/5 p-4 text-sm text-foreground/90">
-                Foglalás hamarosan!
+              <div className="rounded-sm border border-border/70 bg-background/60 p-4">
+                <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                  Gyerek · 0–3 év
+                </p>
+                <p className="mt-3 font-display text-3xl text-foreground">
+                  {formatHuf(pricingSettings.toddler_price)}
+                </p>
+                <p className="mt-1 text-sm text-muted-foreground">/ fő / éj</p>
+              </div>
+              <div className="rounded-sm border border-border/70 bg-background/60 p-4">
+                <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Kutya</p>
+                <p className="mt-3 font-display text-3xl text-foreground">
+                  {formatHuf(pricingSettings.dog_price)}
+                </p>
+                <p className="mt-1 text-sm text-muted-foreground">/ éj</p>
               </div>
             </div>
-          </Reveal>
-        ) : (
+
+            <div className="mt-8 grid gap-4 rounded-sm border border-border/70 bg-background/40 p-4 text-sm text-muted-foreground md:grid-cols-2">
+              <div className="flex items-center justify-between gap-3 border-b border-border/60 pb-3 md:border-none md:pb-0">
+                <span>Minimális tartózkodás</span>
+                <span className="font-medium text-foreground">2 éjszaka</span>
+              </div>
+              <div className="flex items-center justify-between gap-3 border-b border-border/60 pb-3 md:border-none md:pb-0">
+                <span>IFA / fő / éj</span>
+                <span className="font-medium text-foreground">
+                  {formatHuf(pricingSettings.ifa_per_adult)}
+                </span>
+              </div>
+              <div className="flex items-center justify-between gap-3">
+                <span>1 éjszaka esetén felár</span>
+                <span className="font-medium text-foreground">+{pricingSettings.single_night_surcharge_percent}%</span>
+              </div>
+              <div className="flex items-center justify-between gap-3">
+                <span>4 éjszaka felett</span>
+                <span className="font-medium text-primary">egyéni ár</span>
+              </div>
+            </div>
+
+            <div className="mt-8 rounded-sm border border-primary/30 bg-primary/5 p-4 text-sm text-foreground/90">
+              {bookingEnabled
+                ? "A kiemelt időszakokban is érvényes a +50% felár: 30.000 Ft / fő / éj felnőtt, 20.000 Ft / fő / éj gyermek."
+                : "A kiemelt időszakokban is érvényes a +50% felár: 30.000 Ft / fő / éj felnőtt, 20.000 Ft / fő / éj gyermek."}
+            </div>
+          </div>
+        </Reveal>
+
+        {bookingEnabled && (
           <div className="mt-16 grid gap-10 lg:grid-cols-[auto_1fr] lg:gap-16">
             <Reveal className="rounded-sm border border-border/70 bg-card/50 p-4 sm:p-6">
               <Calendar

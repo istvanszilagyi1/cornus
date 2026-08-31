@@ -142,7 +142,7 @@ export function SiteFooter() {
           <span aria-hidden="true">·</span>
           <LegalModalLink label="Adatkezelési Tájékoztató" title="Adatkezelési Tájékoztató" pdfUrl="/adatkezelesi.html">
             <h3 className="mt-4 text-base font-semibold text-foreground">Adatkezelési Tájékoztató</h3>
-            <p className="mt-3">A Cornus Apartman szálláshely üzemeltetője, Horváth-Katona Fruzsina a foglalási, kapcsolattartási és szállásüzemeltetési feladatokhoz szükséges személyes adatokat kezeli.</p>
+            <p className="mt-3">A Cornus Vendégház szálláshely üzemeltetője, Horváth-Katona Fruzsina a foglalási, kapcsolattartási és szállásüzemeltetési feladatokhoz szükséges személyes adatokat kezeli.</p>
             <ul className="mt-3 list-disc space-y-2 pl-5">
               <li>Adatkezelő: Horváth-Katona Fruzsina, 4220 Hajdúböszörmény, Kis-Bocskai szőlő 1072/2.</li>
               <li>Keletkezett adatok: név, e-mail, telefonszám, érkezési és távozási adatok, vendégszám és a foglalással kapcsolatos megjegyzések.</li>

@@ -4,8 +4,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-const TITLE = "Szállásadói belépés – Cornus Apartman";
-const DESCRIPTION = "Bejelentkezés a Cornus Apartman foglaláskezelő felületére.";
+const TITLE = "Szállásadói belépés – Cornus Vendégház";
+const DESCRIPTION = "Bejelentkezés a Cornus Vendégház foglaláskezelő felületére.";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({

@@ -110,7 +110,7 @@ function getNotificationRecipients() {
 
 function getBankingDetails() {
   return {
-    bankName: process.env["BANK_NAME"] ?? "CORNUS Apartman",
+    bankName: process.env["BANK_NAME"] ?? "CORNUS Vendégház",
     accountHolder: process.env["BANK_ACCOUNT_HOLDER"] ?? "Horváth-Katona Fruzsina",
     accountNumber: process.env["BANK_ACCOUNT_NUMBER"] ?? "11732030-70001086",
     iban: process.env["BANK_IBAN"] ?? "HU17 1173 2030 7000 1086 0000 0000",
@@ -147,7 +147,7 @@ function getSummaryValues(payload: BookingEmailPayload) {
 function getContactLineHtml() {
   return `
     <div style="font-family: Arial, sans-serif; color: #1f2a2d; line-height: 1.6;">
-      <p style="margin: 0 0 4px; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; color: #7a897b;"><strong>CORNUS Apartman</strong></p>
+      <p style="margin: 0 0 4px; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; color: #7a897b;"><strong>CORNUS Vendégház</strong></p>
       <p style="margin: 0; font-size: 13px;">${SITE.address}</p>
       <p style="margin: 0; font-size: 13px;">${SITE.phone}</p>
       <p style="margin: 0; font-size: 13px;">${SITE.email}</p>
@@ -161,7 +161,7 @@ export function buildGuestEmailHtml(payload: BookingEmailPayload) {
 
   const bodyText = {
     booking_received: "Köszönjük a foglalási kérelmedet! A foglalásod jóváhagyásához és véglegesítéséhez kérjük, utald át az előleget (a végösszeg 50%-át) a lent megadott bankszámlára 48 órán belül. Az alábbiakban találod a pontos árkalkulációt és a banki adatokat. Az érkezés 15:00-16:00 között a távozás pedig 10:00. Ettől eltérő távozás külön egyeztetést igényel.",
-    booking_approved: "Örömmel értesítünk, hogy a foglalásod jóváhagyásra került! Szeretettel várunk a Cornus Apartmanban. A gördülékeny tartózkodás érdekében csatolva küldjük a szálláshely házirendjét. Az érkezés 15:00-16:00 között a távozás pedig 10:00. Ettől eltérő távozás külön egyeztetést igényel.",
+    booking_approved: "Örömmel értesítünk, hogy a foglalásod jóváhagyásra került! Szeretettel várunk a Cornus Vendégházban. A gördülékeny tartózkodás érdekében csatolva küldjük a szálláshely házirendjét. Az érkezés 15:00-16:00 között a távozás pedig 10:00. Ettől eltérő távozás külön egyeztetést igényel.",
     booking_rejected: "Sajnáljuk, de a megadott időpontokra a foglalásod elutasításra került. Kérjük, válassz másik időpontot a weboldalon, vagy vedd fel velünk a kapcsolatot, hogy közösen találjunk egy megfelelő dátumot.",
   }[payload.action];
 
@@ -209,7 +209,7 @@ export function buildGuestEmailHtml(payload: BookingEmailPayload) {
     <div style="font-family: Arial, sans-serif; color: #151515; line-height: 1.6; background: #f7f3ee; padding: 24px;">
       <div style="max-width: 760px; margin: 0 auto; background: #fff; border: 1px solid #e7e2d8; border-radius: 14px; overflow: hidden;">
         <div style="padding: 22px 22px 0; background: #f5f0e8; border-bottom: 1px solid #e7e2d8;">
-          <img src="cid:cornus-brand-card" alt="Cornus Apartman" style="display: block; width: 100%; max-width: 640px; height: auto; margin: 0 auto 18px; border-radius: 12px;" />
+          <img src="cid:cornus-brand-card" alt="Cornus Vendégház" style="display: block; width: 100%; max-width: 640px; height: auto; margin: 0 auto 18px; border-radius: 12px;" />
         </div>
         <div style="padding: 28px;">
           <p style="margin: 0 0 12px; font-size: 18px; font-weight: 600;">Kedves ${payload.guest_name}!</p>
@@ -260,7 +260,7 @@ export function buildGuestEmailHtml(payload: BookingEmailPayload) {
             ${getContactLineHtml()}
           </div>
 
-          <p style="margin: 18px 0 0; font-size: 14px; color: #4b5563;">Üdvözlettel,<br />Cornus Apartman</p>
+          <p style="margin: 18px 0 0; font-size: 14px; color: #4b5563;">Üdvözlettel,<br />Cornus Vendégház</p>
         </div>
       </div>
     </div>
@@ -273,7 +273,7 @@ export function buildAdminNotificationHtml(payload: BookingEmailPayload) {
     <div style="font-family: Arial, sans-serif; color: #191919; line-height: 1.6; background: #f7f3ee; padding: 24px;">
       <div style="max-width: 720px; margin: 0 auto; background: #fff; border: 1px solid #e7e2d8; border-radius: 12px; overflow: hidden;">
         <div style="padding: 18px 22px; background: #f5f0e8; border-bottom: 1px solid #e7e2d8;">
-          <img src="cid:cornus-brand-card" alt="Cornus Apartman" style="display: block; width: 100%; max-width: 520px; height: auto; margin: 0 auto; border-radius: 10px;" />
+          <img src="cid:cornus-brand-card" alt="Cornus Vendégház" style="display: block; width: 100%; max-width: 520px; height: auto; margin: 0 auto; border-radius: 10px;" />
         </div>
         <div style="padding: 28px;">
           <h2 style="margin: 0 0 16px; font-size: 26px; color: #1f2a2d;">Új foglalási értesítés</h2>
@@ -301,7 +301,7 @@ async function createHouseRulesPdfBuffer() {
     doc.on("end", () => resolve(Buffer.concat(chunks)));
     doc.on("error", (error) => reject(error));
 
-    doc.fontSize(22).text("CORNUS Apartman – Házirend", { align: "center" });
+    doc.fontSize(22).text("CORNUS Vendégház – Házirend", { align: "center" });
     doc.moveDown();
     doc.fontSize(11).text("A vendégház használata során kérjük, a vendégek tartózkodjanak a szálláshely rendjéhez és a környezet tiszteletben tartásához.");
     doc.moveDown();
@@ -334,9 +334,9 @@ export async function sendBookingEmail(payload: BookingEmailPayload) {
 
   const notificationRecipients = getNotificationRecipients();
   const subjectByAction: Record<BookingEmailAction, string> = {
-    booking_received: "Foglalási kérelem elküldve – Cornus Apartman",
-    booking_approved: "Foglalás jóváhagyva – Cornus Apartman",
-    booking_rejected: "Foglalási kérelem elutasítva – Cornus Apartman",
+    booking_received: "Foglalási kérelem elküldve – Cornus Vendégház",
+    booking_approved: "Foglalás jóváhagyva – Cornus Vendégház",
+    booking_rejected: "Foglalási kérelem elutasítva – Cornus Vendégház",
   };
 
   const approvedHouseRulesAttachment = payload.action === "booking_approved"
@@ -346,7 +346,7 @@ export async function sendBookingEmail(payload: BookingEmailPayload) {
     : [];
 
   const guestMailOptions: SendMailOptions = {
-    from: `${process.env["SMTP_FROM_NAME"] ?? "Cornus Apartman"} <${process.env["SMTP_USER"] ?? "cornustokaj@gmail.com"}>`,
+    from: `${process.env["SMTP_FROM_NAME"] ?? "Cornus Vendégház"} <${process.env["SMTP_USER"] ?? "cornustokaj@gmail.com"}>`,
     to: normalizedPayload.email,
     replyTo: process.env["SMTP_USER"] ?? "cornustokaj@gmail.com",
     subject: subjectByAction[normalizedPayload.action],
@@ -364,14 +364,14 @@ export async function sendBookingEmail(payload: BookingEmailPayload) {
   }
 
   const adminMailOptions: SendMailOptions = {
-    from: `${process.env["SMTP_FROM_NAME"] ?? "Cornus Apartman"} <${process.env["SMTP_USER"] ?? "cornustokaj@gmail.com"}>`,
+    from: `${process.env["SMTP_FROM_NAME"] ?? "Cornus Vendégház"} <${process.env["SMTP_USER"] ?? "cornustokaj@gmail.com"}>`,
     to: notificationRecipients.join(","),
     replyTo: process.env["SMTP_USER"] ?? "cornustokaj@gmail.com",
     subject: normalizedPayload.action === "booking_approved"
-      ? "Foglalás elfogadva – Cornus Apartman"
+      ? "Foglalás elfogadva – Cornus Vendégház"
       : normalizedPayload.action === "booking_rejected"
-        ? "Foglalás elutasítva – Cornus Apartman"
-        : "Új foglalási kérelm érkezett – Cornus Apartman",
+        ? "Foglalás elutasítva – Cornus Vendégház"
+        : "Új foglalási kérelm érkezett – Cornus Vendégház",
     html: buildAdminNotificationHtml(normalizedPayload),
     attachments: [{ filename: "nevjegy.png", path: BRAND_CARD_PATH, cid: "cornus-brand-card" }],
   };

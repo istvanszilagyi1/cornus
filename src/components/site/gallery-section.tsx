@@ -119,7 +119,7 @@ export function GallerySection() {
               >
                 <img
                   src={img.url}
-                  alt={img.title ?? "Cornus Apartman"}
+                  alt={img.title ?? "Cornus Vendégház"}
                   loading="lazy"
                   className="size-full object-cover transition-transform duration-[1400ms] group-hover:scale-110"
                 />

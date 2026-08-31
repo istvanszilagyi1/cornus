@@ -9,7 +9,7 @@ const BASE_PROGRAMS = [
   {
     title: "Pincelátogatás és aszúkóstoló",
     description:
-      "A történelmi pincesorok néhány percre vannak az apartmantól. Szívesen segítünk időpontot foglalni.",
+      "A történelmi pincesorok néhány percre vannak a vendégházunktól. Szívesen segítünk időpontot foglalni.",
     location: "Tokaji pincesor",
     date_text: "Egész évben",
   },

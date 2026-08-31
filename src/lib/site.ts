@@ -1,8 +1,8 @@
 export const SITE = {
-  name: "Cornus Apartman",
+  name: "Cornus Vendégház",
   short: "Cornus",
   town: "Tokaj",
-  tagline: "Apartman a szőlőhegy és a folyó között",
+  tagline: "Vendégház a szőlőhegy és a folyó között",
   address: "3910 Tokaj, Jeddi-Fejér Andor utca 31.",
   phone: "Horváth-Katona Fruzsina (+36 70 368 2132), Horváth Gergő (+36 70 621 2582)",
   email: "cornustokaj@gmail.com",
@@ -13,7 +13,7 @@ export const SITE = {
 } as const;
 
 export const NAV_LINKS = [
-  { id: "apartman", label: "Apartman" },
+  { id: "vendeghaz", label: "Vendégház" },
   { id: "programok", label: "Programok" },
   { id: "galeria", label: "Galéria" },
   { id: "foglalas", label: "Foglalás" },

@@ -16,7 +16,7 @@ const FRAMES = [
   { src: outsidewine1, alt: "Tokaj környező borospincék és szőlőhegyek" },
   { src: outsidewine2, alt: "A környék nyugodt, borostyán színű hangulata" },
   { src: nature, alt: "A tokaji táj északi, nyugodt része" },
-  { src: nappali, alt: "A Cornus Apartman nappalija panorámaablakkal" },
+  { src: nappali, alt: "A Cornus Vendégház nappalija panorámaablakkal" },
   { src: tokajCellar, alt: "Tokaji pince hordókkal és aszúval" },
   { src: tokajTown, alt: "Tokaj városa a folyópartról" },
 ];
@@ -65,7 +65,7 @@ export function Hero() {
           className="animate-fade-up mt-6 max-w-xl text-sm leading-relaxed tracking-[0.22em] text-foreground/80 uppercase sm:text-base"
           style={{ animationDelay: "260ms" }}
         >
-          Apartman a szőlőhegy és a folyó között
+          Vendégház a szőlőhegy és a folyó között
         </p>
 
         <div
@@ -79,10 +79,10 @@ export function Hero() {
             Foglalás
           </a>
           <a
-            href="#apartman"
+            href="#vendeghaz"
             className="rounded-sm border border-foreground/30 px-8 py-3.5 text-xs tracking-[0.28em] text-foreground uppercase backdrop-blur-sm transition-colors duration-300 hover:border-primary hover:text-primary"
           >
-            Az apartman
+            A vendégház
           </a>
         </div>
       </div>

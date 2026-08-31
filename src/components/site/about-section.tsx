@@ -9,7 +9,6 @@ import { SITE } from "@/lib/site";
 
 const FEATURES = [
   { icon: BedDouble, label: "2 hálótér", note: "4 fő részére" },
-  { icon: Wine, label: "Borsarok", note: "helyi tételekkel" },
   { icon: Wifi, label: "Gyors wifi", note: "külön munkasarok" },
   { icon: Coffee, label: "Teljes konyha", note: "eszpresszógép" },
   { icon: Car, label: "Zárt parkoló", note: "az udvarban" },
@@ -75,7 +74,7 @@ const APARTMENT_DETAILS = [
 export function AboutSection() {
   return (
     <section
-      id="apartman"
+      id="vendeghaz"
       className="relative overflow-hidden border-t border-border/50 py-16 md:py-20 lg:py-24"
     >
       <div className="mx-auto max-w-7xl px-6">
@@ -83,7 +82,7 @@ export function AboutSection() {
         <Reveal>
           <div className="max-w-3xl">
             <SectionHeading
-              eyebrow="Az apartman"
+              eyebrow="A vendégház"
               title="Csend, kő, fa és aranyszínű fény"
               lead="A Cornus a tokaji óváros szélén, néhány perc sétára a Bodrog partjától. Kortárs terek, természetes anyagok és nagy ablakok, amelyeken túl a szőlősorok futnak fel a hegyre. Egy hosszú kóstoló után ide érdemes hazaérni."
             />
@@ -143,7 +142,7 @@ export function AboutSection() {
                 <div className="aspect-[4/5]">
                   <img
                     src={nappali}
-                    alt="Cornus apartman nappali részlete"
+                    alt="Cornus vendégház nappali részlete"
                     loading="lazy"
                     width={1600}
                     height={1067}

@@ -9,9 +9,9 @@ import { BookingSection } from "@/components/site/booking-section";
 import { ContactSection, SiteFooter } from "@/components/site/contact-section";
 import { trackPageView } from "@/lib/analytics";
 
-const TITLE = "Cornus Apartman Tokaj – foglalás, programok, galéria";
+const TITLE = "Cornus Vendégház Tokaj – foglalás, programok, galéria";
 const DESCRIPTION =
-  "A Cornus Apartman Tokajban: design belső terek, panorámás terasz, online foglalás és a Fesztiválkatlan aktuális programjai.";
+  "A Cornus Vendégház Tokajban: design belső terek, panorámás terasz, online foglalás és a Fesztiválkatlan aktuális programjai.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
