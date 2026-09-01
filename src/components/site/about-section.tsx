@@ -94,18 +94,20 @@ export function AboutSection() {
           delay={100}
           className="mt-12 border-y border-border/60 py-7 md:mt-14 md:py-8"
         >
-          <div className="grid grid-cols-2 justify-items-center justify-center gap-x-5 gap-y-7 sm:grid-cols-3 lg:grid-cols-6 lg:gap-x-8">
+          <div className="grid grid-cols-2 place-items-center gap-x-5 gap-y-7 sm:grid-cols-3 lg:grid-cols-6 lg:gap-x-8">
             {FEATURES.map((f) => (
               <div
                 key={f.label}
-                className="group flex w-full items-center justify-center gap-3 text-center lg:flex-col lg:justify-center"
+                className="group flex w-full flex-col items-center justify-center text-center"
               >
+                {/* Ikon doboz */}
                 <div className="flex size-10 shrink-0 items-center justify-center rounded-full border border-border/70 bg-card/40 transition-all duration-300 group-hover:border-primary/50 group-hover:bg-primary/5">
                   <f.icon className="size-4 text-primary transition-transform duration-300 group-hover:-translate-y-0.5" />
                 </div>
 
-                <div className="lg:mt-3">
-                  <p className="text-sm text-foreground">{f.label}</p>
+                {/* Szöveges doboz */}
+                <div className="mt-2 flex flex-col items-center justify-center text-center">
+                  <p className="text-sm font-medium text-foreground">{f.label}</p>
                   <p className="mt-0.5 text-xs text-muted-foreground">
                     {f.note}
                   </p>
