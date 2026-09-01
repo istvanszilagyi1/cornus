@@ -98,7 +98,7 @@ export function AboutSection() {
             {FEATURES.map((f) => (
               <div
                 key={f.label}
-                className="group flex items-center gap-3 lg:flex lg:flex-col lg:items-center lg:text-center"
+                className="group flex w-full items-center justify-center gap-3 text-center lg:flex-col lg:justify-center"
               >
                 <div className="flex size-10 shrink-0 items-center justify-center rounded-full border border-border/70 bg-card/40 transition-all duration-300 group-hover:border-primary/50 group-hover:bg-primary/5">
                   <f.icon className="size-4 text-primary transition-transform duration-300 group-hover:-translate-y-0.5" />

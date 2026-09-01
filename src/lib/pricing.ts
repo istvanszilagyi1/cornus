@@ -64,8 +64,8 @@ export const DEFAULT_SPECIAL_PERIODS: PricingSpecialPeriod[] = [
     start_date: "2026-10-23",
     end_date: "2026-10-25",
     min_nights: 2,
-    adult_price: 30000,
-    child_price: 20000,
+    adult_price: 25000,
+    child_price: 15000,
     is_active: true,
   },
   {
@@ -74,8 +74,8 @@ export const DEFAULT_SPECIAL_PERIODS: PricingSpecialPeriod[] = [
     start_date: "2026-10-26",
     end_date: "2026-11-01",
     min_nights: 3,
-    adult_price: 30000,
-    child_price: 20000,
+    adult_price: 25000,
+    child_price: 15000,
     is_active: true,
   },
   {
@@ -84,8 +84,8 @@ export const DEFAULT_SPECIAL_PERIODS: PricingSpecialPeriod[] = [
     start_date: "2026-12-24",
     end_date: "2026-12-27",
     min_nights: 3,
-    adult_price: 30000,
-    child_price: 20000,
+    adult_price: 25000,
+    child_price: 15000,
     is_active: true,
   },
   {
@@ -94,8 +94,8 @@ export const DEFAULT_SPECIAL_PERIODS: PricingSpecialPeriod[] = [
     start_date: "2026-12-31",
     end_date: "2027-01-02",
     min_nights: 2,
-    adult_price: 30000,
-    child_price: 20000,
+    adult_price: 25000,
+    child_price: 15000,
     is_active: true,
   },
 ];

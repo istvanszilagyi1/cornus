@@ -53,5 +53,7 @@ test("booking is enabled by default and pricing rules stay intact", () => {
     DEFAULT_SPECIAL_PERIODS,
   );
 
-  assert.equal(peakTotal, 163000);
+  assert.equal(DEFAULT_SPECIAL_PERIODS[0].adult_price, 25000);
+  assert.equal(DEFAULT_SPECIAL_PERIODS[0].child_price, 15000);
+  assert.equal(peakTotal, 133000);
 });

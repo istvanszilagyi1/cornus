@@ -367,9 +367,7 @@ export function BookingSection() {
             </div>
 
             <div className="mt-8 rounded-sm border border-primary/30 bg-primary/5 p-4 text-sm text-foreground/90">
-              {bookingEnabled
-                ? "A kiemelt időszakokban is érvényes a +50% felár: 30.000 Ft / fő / éj felnőtt, 20.000 Ft / fő / éj gyermek."
-                : "A kiemelt időszakokban is érvényes a +50% felár: 30.000 Ft / fő / éj felnőtt, 20.000 Ft / fő / éj gyermek."}
+              Kiemelt időszakban a szállás ára +5.000 Ft / fő / éj, így a felnőtt 25.000 Ft, a gyermek 15.000 Ft / fő / éj.
             </div>
           </div>
         </Reveal>
@@ -590,6 +588,11 @@ export function BookingSection() {
                           <span>Végösszeg</span>
                           <span>{formatHuf(pricingSummary.total)}</span>
                         </div>
+                        {pricingSummary.nights > 4 && (
+                          <p className="mt-2 text-xs uppercase tracking-[0.14em] text-primary">
+                            Egyéni kedvezményes ár a szállásadótól – a foglalásnál ezt küldjük tovább.
+                          </p>
+                        )}
                         <div className="mt-2 flex items-center justify-between gap-4 text-sm text-muted-foreground">
                           <span>50% előleg</span>
                           <span className="font-medium text-primary">
