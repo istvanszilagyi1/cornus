@@ -94,7 +94,7 @@ export function AboutSection() {
           delay={100}
           className="mt-12 border-y border-border/60 py-7 md:mt-14 md:py-8"
         >
-          <div className="grid grid-cols-2 justify-items-center gap-x-5 gap-y-7 sm:grid-cols-3 lg:grid-cols-6 lg:gap-x-8">
+          <div className="grid grid-cols-2 justify-items-center justify-center gap-x-5 gap-y-7 sm:grid-cols-3 lg:grid-cols-6 lg:gap-x-8">
             {FEATURES.map((f) => (
               <div
                 key={f.label}

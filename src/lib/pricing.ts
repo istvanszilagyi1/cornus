@@ -15,6 +15,8 @@ export type PricingSettings = {
   updated_at?: string;
 };
 
+export type PricingSpecialPeriodRecurrence = "none" | "yearly" | "once";
+
 export type PricingSpecialPeriod = {
   id?: string;
   name: string;
@@ -23,6 +25,7 @@ export type PricingSpecialPeriod = {
   min_nights: number;
   adult_price: number;
   child_price: number;
+  recurrence?: PricingSpecialPeriodRecurrence;
   is_active?: boolean;
   created_at?: string;
   updated_at?: string;
@@ -100,6 +103,57 @@ export const DEFAULT_SPECIAL_PERIODS: PricingSpecialPeriod[] = [
   },
 ];
 
+function getPeriodWindowForYear(period: PricingSpecialPeriod, year: number) {
+  const start = new Date(`${period.start_date}T00:00:00`);
+  const end = new Date(`${period.end_date}T23:59:59`);
+  const startMonth = start.getMonth();
+  const startDay = start.getDate();
+  const endMonth = end.getMonth();
+  const endDay = end.getDate();
+  const startYear = start.getFullYear();
+  const endYear = end.getFullYear();
+
+  const candidateStart = new Date(year, startMonth, startDay, 0, 0, 0, 0);
+  const candidateEnd = new Date(
+    year + (endYear > startYear && endMonth < startMonth ? 1 : 0),
+    endMonth,
+    endDay,
+    23,
+    59,
+    59,
+    999,
+  );
+
+  return { start: candidateStart, end: candidateEnd };
+}
+
+function periodMatchesSelectedRange(period: PricingSpecialPeriod, selectedDays: Date[]) {
+  const start = new Date(`${period.start_date}T00:00:00`);
+  const end = new Date(`${period.end_date}T23:59:59`);
+  const currentYear = start.getFullYear();
+  const recurrence = period.recurrence ?? "none";
+  const yearsToCheck = new Set<number>([currentYear]);
+
+  if (recurrence === "yearly") {
+    const minYear = Math.min(selectedDays[0]?.getFullYear() ?? currentYear, currentYear);
+    const maxYear = Math.max(
+      selectedDays[selectedDays.length - 1]?.getFullYear() ?? currentYear,
+      currentYear,
+    );
+
+    for (let year = minYear; year <= maxYear; year += 1) yearsToCheck.add(year);
+  }
+
+  if (recurrence === "once") {
+    yearsToCheck.add(currentYear + 1);
+  }
+
+  return Array.from(yearsToCheck).some((year) => {
+    const { start: candidateStart, end: candidateEnd } = getPeriodWindowForYear(period, year);
+    return selectedDays.some((day) => day >= candidateStart && day <= candidateEnd);
+  });
+}
+
 export function getRangeMinNights(
   range: DateRange | undefined,
   settings: PricingSettings,
@@ -110,11 +164,7 @@ export function getRangeMinNights(
   const selectedDays = eachDayOfInterval({ start: range.from, end: range.to });
   const periodMinimums = periods
     .filter((period) => period.is_active !== false)
-    .filter((period) => {
-      const start = new Date(`${period.start_date}T00:00:00`);
-      const end = new Date(`${period.end_date}T23:59:59`);
-      return selectedDays.some((day) => day >= start && day <= end);
-    })
+    .filter((period) => periodMatchesSelectedRange(period, selectedDays))
     .map((period) => period.min_nights);
 
   return periodMinimums.length ? Math.max(...periodMinimums) : settings.min_nights_default;
@@ -129,11 +179,7 @@ export function getApplicableSpecialPeriod(
   const selectedDays = eachDayOfInterval({ start: range.from, end: range.to });
   return periods
     .filter((period) => period.is_active !== false)
-    .find((period) => {
-      const start = new Date(`${period.start_date}T00:00:00`);
-      const end = new Date(`${period.end_date}T23:59:59`);
-      return selectedDays.some((day) => day >= start && day <= end);
-    });
+    .find((period) => periodMatchesSelectedRange(period, selectedDays));
 }
 
 export function estimateBookingRevenueFromBooking(

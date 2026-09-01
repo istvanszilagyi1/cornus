@@ -201,6 +201,7 @@ export type Database = {
           is_active: boolean;
           min_nights: number;
           name: string;
+          recurrence: "none" | "yearly" | "once";
           start_date: string;
           updated_at: string;
         };
@@ -213,6 +214,7 @@ export type Database = {
           is_active?: boolean;
           min_nights?: number;
           name: string;
+          recurrence?: "none" | "yearly" | "once";
           start_date: string;
           updated_at?: string;
         };
@@ -225,6 +227,7 @@ export type Database = {
           is_active?: boolean;
           min_nights?: number;
           name?: string;
+          recurrence?: "none" | "yearly" | "once";
           start_date?: string;
           updated_at?: string;
         };

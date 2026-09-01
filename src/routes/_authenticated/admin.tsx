@@ -1138,6 +1138,21 @@ function PricingSettingsPanel() {
                   </select>
                 </div>
                 <div>
+                  <Label htmlFor={`period-recurrence-${index}`}>Ismétlődés</Label>
+                  <select
+                    id={`period-recurrence-${index}`}
+                    value={period.recurrence ?? "none"}
+                    onChange={(e) =>
+                      updatePeriodField(index, "recurrence", e.target.value as "none" | "yearly" | "once")
+                    }
+                    className="mt-2 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  >
+                    <option value="none">Csak egyszer</option>
+                    <option value="yearly">Minden évben</option>
+                    <option value="once">Egyszer ismétlődik</option>
+                  </select>
+                </div>
+                <div>
                   <Label htmlFor={`period-adult-${index}`}>Felnőtt / éj</Label>
                   <Input
                     id={`period-adult-${index}`}
@@ -1203,6 +1218,7 @@ function PricingSettingsPanel() {
                 min_nights: 2,
                 adult_price: 30000,
                 child_price: 15000,
+                recurrence: "none",
                 is_active: true,
               },
             ])
