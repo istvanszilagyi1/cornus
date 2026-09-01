@@ -157,7 +157,7 @@ export function SiteFooter() {
           <span>NTAK szám: {SITE.ntakNumber}</span>
         </div>
         <p className="mt-3 text-xs tracking-[0.18em] text-muted-foreground uppercase">
-          Szilágyi István készítette a weboldalt · +36205964556
+          Weboldalt készítette: Szilágyi István · +36205964556
         </p>
         <p className="mt-2 text-xs tracking-[0.25em] text-muted-foreground uppercase">
           {SITE.town} · {new Date().getFullYear()}
