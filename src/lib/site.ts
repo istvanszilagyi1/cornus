@@ -7,7 +7,7 @@ export const SITE = {
   phone: "Horváth-Katona Fruzsina (+36 70 368 2132), Horváth Gergő (+36 70 621 2582)",
   email: "cornustokaj@gmail.com",
   taxNumber: "92026449-1-29",
-  ntakNumber: "(placeholder meglévő mezővel)",
+  ntakNumber: "MA26130313",
   maxGuests: 8,
   pricePerNight: 38000,
 } as const;
