@@ -79,6 +79,18 @@ export type Database = {
           personal_data_redacted_at: string | null;
           phone: string | null;
           status: string;
+          total: number | null;
+          deposit: number | null;
+          nights: number | null;
+          adult_guests: number | null;
+          child_guests: number | null;
+          toddler_guests: number | null;
+          room_subtotal: number | null;
+          ifa_subtotal: number | null;
+          dog_subtotal: number | null;
+          single_night_surcharge: number | null;
+          nightly_adult_rate: number | null;
+          nightly_child_rate: number | null;
           updated_at: string;
         };
         Insert: {
@@ -97,6 +109,18 @@ export type Database = {
           personal_data_redacted_at?: string | null;
           phone?: string | null;
           status?: string;
+          total?: number | null;
+          deposit?: number | null;
+          nights?: number | null;
+          adult_guests?: number | null;
+          child_guests?: number | null;
+          toddler_guests?: number | null;
+          room_subtotal?: number | null;
+          ifa_subtotal?: number | null;
+          dog_subtotal?: number | null;
+          single_night_surcharge?: number | null;
+          nightly_adult_rate?: number | null;
+          nightly_child_rate?: number | null;
           updated_at?: string;
         };
         Update: {
@@ -115,6 +139,18 @@ export type Database = {
           personal_data_redacted_at?: string | null;
           phone?: string | null;
           status?: string;
+          total?: number | null;
+          deposit?: number | null;
+          nights?: number | null;
+          adult_guests?: number | null;
+          child_guests?: number | null;
+          toddler_guests?: number | null;
+          room_subtotal?: number | null;
+          ifa_subtotal?: number | null;
+          dog_subtotal?: number | null;
+          single_night_surcharge?: number | null;
+          nightly_adult_rate?: number | null;
+          nightly_child_rate?: number | null;
           updated_at?: string;
         };
         Relationships: [];

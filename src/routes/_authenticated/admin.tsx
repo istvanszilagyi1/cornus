@@ -514,6 +514,18 @@ function BookingsPanel() {
       guests,
       dogs,
       message,
+      total,
+      deposit,
+      nights,
+      adultGuests,
+      childGuests,
+      toddlerGuests,
+      roomSubtotal,
+      ifaSubtotal,
+      dogSubtotal,
+      singleNightSurcharge,
+      nightlyAdultRate,
+      nightlyChildRate,
     }: {
       id: string;
       status: string;
@@ -527,6 +539,18 @@ function BookingsPanel() {
       guests?: number;
       dogs?: number;
       message?: string | null;
+      total?: number | null;
+      deposit?: number | null;
+      nights?: number | null;
+      adultGuests?: number | null;
+      childGuests?: number | null;
+      toddlerGuests?: number | null;
+      roomSubtotal?: number | null;
+      ifaSubtotal?: number | null;
+      dogSubtotal?: number | null;
+      singleNightSurcharge?: number | null;
+      nightlyAdultRate?: number | null;
+      nightlyChildRate?: number | null;
     }) => {
       try {
         const { error } = await supabase.from("bookings").update({ status }).eq("id", id);
@@ -555,17 +579,32 @@ function BookingsPanel() {
         }
 
         if (status === "confirmed" || status === "rejected") {
-          const bookingSummary = getBookingPricingSummary({
-            range:
-              checkIn && checkOut
-                ? { from: new Date(`${checkIn}T12:00:00`), to: new Date(`${checkOut}T12:00:00`) }
-                : undefined,
-            adults: Number(adults ?? 1),
-            childAges: Array(Number(children ?? 0)).fill(0),
-            dogs: Number(dogs ?? 0),
-            settings: DEFAULT_PRICING_SETTINGS,
-            periods: DEFAULT_SPECIAL_PERIODS,
-          });
+          const bookingSummary = total != null
+            ? {
+                total: Number(total),
+                deposit: Number(deposit ?? Number(total) * 0.5),
+                nights: Number(nights ?? 0),
+                adultGuests: Number(adultGuests ?? adults ?? 0),
+                childGuests: Number(childGuests ?? 0),
+                toddlerGuests: Number(toddlerGuests ?? 0),
+                roomSubtotal: Number(roomSubtotal ?? 0),
+                ifaSubtotal: Number(ifaSubtotal ?? 0),
+                dogSubtotal: Number(dogSubtotal ?? 0),
+                singleNightSurcharge: Number(singleNightSurcharge ?? 0),
+                nightlyAdultRate: Number(nightlyAdultRate ?? 0),
+                nightlyChildRate: Number(nightlyChildRate ?? 0),
+              }
+            : getBookingPricingSummary({
+                range:
+                  checkIn && checkOut
+                    ? { from: new Date(`${checkIn}T12:00:00`), to: new Date(`${checkOut}T12:00:00`) }
+                    : undefined,
+                adults: Number(adults ?? 1),
+                childAges: Array(Number(children ?? 0)).fill(0),
+                dogs: Number(dogs ?? 0),
+                settings: DEFAULT_PRICING_SETTINGS,
+                periods: DEFAULT_SPECIAL_PERIODS,
+              });
 
           const payload = {
             action: status === "confirmed" ? "booking_approved" : "booking_rejected",
@@ -758,6 +797,18 @@ function BookingsPanel() {
                       guests: b.guests,
                       dogs: b.dogs,
                       message: b.message,
+                      total: b.total,
+                      deposit: b.deposit,
+                      nights: b.nights,
+                      adultGuests: b.adult_guests,
+                      childGuests: b.child_guests,
+                      toddlerGuests: b.toddler_guests,
+                      roomSubtotal: b.room_subtotal,
+                      ifaSubtotal: b.ifa_subtotal,
+                      dogSubtotal: b.dog_subtotal,
+                      singleNightSurcharge: b.single_night_surcharge,
+                      nightlyAdultRate: b.nightly_adult_rate,
+                      nightlyChildRate: b.nightly_child_rate,
                     })
                   }
                 >
@@ -778,6 +829,18 @@ function BookingsPanel() {
                       guests: b.guests,
                       dogs: b.dogs,
                       message: b.message,
+                      total: b.total,
+                      deposit: b.deposit,
+                      nights: b.nights,
+                      adultGuests: b.adult_guests,
+                      childGuests: b.child_guests,
+                      toddlerGuests: b.toddler_guests,
+                      roomSubtotal: b.room_subtotal,
+                      ifaSubtotal: b.ifa_subtotal,
+                      dogSubtotal: b.dog_subtotal,
+                      singleNightSurcharge: b.single_night_surcharge,
+                      nightlyAdultRate: b.nightly_adult_rate,
+                      nightlyChildRate: b.nightly_child_rate,
                     })
                   }
                 >

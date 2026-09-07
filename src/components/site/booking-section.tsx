@@ -217,6 +217,18 @@ export function BookingSection() {
       dogs,
       guests: totalGuests,
       message: String(form.get("message") ?? "").trim() || null,
+      total: pricingSummary.total,
+      deposit: pricingSummary.deposit,
+      nights: pricingSummary.nights,
+      adult_guests: pricingSummary.adultGuests,
+      child_guests: pricingSummary.childGuests,
+      toddler_guests: pricingSummary.toddlerGuests,
+      room_subtotal: pricingSummary.roomSubtotal,
+      ifa_subtotal: pricingSummary.ifaSubtotal,
+      dog_subtotal: pricingSummary.dogSubtotal,
+      single_night_surcharge: pricingSummary.singleNightSurcharge,
+      nightly_adult_rate: pricingSummary.nightlyAdultRate,
+      nightly_child_rate: pricingSummary.nightlyChildRate,
     });
 
     setSubmitting(false);
