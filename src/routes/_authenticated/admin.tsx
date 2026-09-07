@@ -511,6 +511,7 @@ function BookingsPanel() {
       checkOut,
       adults,
       children,
+      childrenAges,
       guests,
       dogs,
       message,
@@ -536,6 +537,7 @@ function BookingsPanel() {
       checkOut?: string;
       adults?: number;
       children?: number;
+      childrenAges?: number[] | null;
       guests?: number;
       dogs?: number;
       message?: string | null;
@@ -579,7 +581,21 @@ function BookingsPanel() {
         }
 
         if (status === "confirmed" || status === "rejected") {
-          const bookingSummary = total != null
+          const hasPricingSnapshot = [
+            total,
+            deposit,
+            nights,
+            adultGuests,
+            childGuests,
+            roomSubtotal,
+            ifaSubtotal,
+            dogSubtotal,
+            singleNightSurcharge,
+            nightlyAdultRate,
+            nightlyChildRate,
+          ].every((value) => value != null);
+
+          const bookingSummary = hasPricingSnapshot
             ? {
                 total: Number(total),
                 deposit: Number(deposit ?? Number(total) * 0.5),
@@ -600,7 +616,7 @@ function BookingsPanel() {
                     ? { from: new Date(`${checkIn}T12:00:00`), to: new Date(`${checkOut}T12:00:00`) }
                     : undefined,
                 adults: Number(adults ?? 1),
-                childAges: Array(Number(children ?? 0)).fill(0),
+                childAges: (childrenAges ?? []).slice(0, Number(children ?? 0)),
                 dogs: Number(dogs ?? 0),
                 settings: DEFAULT_PRICING_SETTINGS,
                 periods: DEFAULT_SPECIAL_PERIODS,
@@ -794,6 +810,7 @@ function BookingsPanel() {
                       checkOut: b.check_out,
                       adults: b.adults,
                       children: b.children,
+                      childrenAges: b.children_ages,
                       guests: b.guests,
                       dogs: b.dogs,
                       message: b.message,
@@ -826,6 +843,7 @@ function BookingsPanel() {
                       checkOut: b.check_out,
                       adults: b.adults,
                       children: b.children,
+                      childrenAges: b.children_ages,
                       guests: b.guests,
                       dogs: b.dogs,
                       message: b.message,
