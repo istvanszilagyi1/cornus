@@ -197,10 +197,21 @@ export function buildGuestEmailHtml(payload: BookingEmailPayload) {
               <td style="padding: 12px 14px; font-weight: 700; color: #1f2a2d;">Összesen</td>
               <td style="padding: 12px 14px; text-align: right; font-weight: 800; color: #1f2a2d;">${formatMoney(summary.total)}</td>
             </tr>
-            <tr>
-              <td style="padding: 12px 14px; font-weight: 700; color: #1f2a2d;">Előleg (50%)</td>
-              <td style="padding: 12px 14px; text-align: right; font-weight: 800; color: #1f2a2d;">${formatMoney(summary.deposit)}</td>
-            </tr>
+            ${payload.action === "booking_approved" ? `
+              <tr>
+                <td style="padding: 12px 14px; font-weight: 700; color: #1f2a2d;">Befizetett összeg</td>
+                <td style="padding: 12px 14px; text-align: right; font-weight: 800; color: #1f2a2d;">${formatMoney(summary.deposit)}</td>
+              </tr>
+              <tr>
+                <td style="padding: 12px 14px; font-weight: 800; color: #1f2a2d;">Fennmaradó összeg (érkezés előtti estig fizetendő)</td>
+                <td style="padding: 12px 14px; text-align: right; font-weight: 800; color: #1f2a2d;">${formatMoney(remainingAmount)}</td>
+              </tr>
+            ` : `
+              <tr>
+                <td style="padding: 12px 14px; font-weight: 700; color: #1f2a2d;">Előleg (50%)</td>
+                <td style="padding: 12px 14px; text-align: right; font-weight: 800; color: #1f2a2d;">${formatMoney(summary.deposit)}</td>
+              </tr>
+            `}
           </table>
 
           ${payload.action !== "booking_rejected" && paymentNote ? `<p style="margin: 0 0 20px; padding: 12px 14px; background: #f7f1e6; border: 1px solid #e2d7c2; border-radius: 8px; color: #374151;">${paymentNote}</p>` : ""}`;

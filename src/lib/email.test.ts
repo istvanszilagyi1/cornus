@@ -97,6 +97,9 @@ test("approved email does not show 0 Ft for missing breakdown values and mention
   assert.doesNotMatch(html, /Gyermekek<\/td>.*?0\s*Ft/i);
   assert.doesNotMatch(html, /Kisgyermek.*?0\s*Ft/i);
   assert.doesNotMatch(html, /Kutya:<\/td>.*?0\s*db/i);
+  assert.match(html, /Befizetett összeg/i);
+  assert.match(html, /Fennmaradó összeg.*érkezés előtti estig fizetendő/i);
+  assert.doesNotMatch(html, /Előleg \(50%\)/i);
   assert.match(html, /érkezésed előtti estig/i);
   assert.match(html, /utald\s*el|átutalni/i);
   assert.match(html, /150\s*000\s*Ft/i);
