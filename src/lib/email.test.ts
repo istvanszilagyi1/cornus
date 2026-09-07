@@ -69,7 +69,7 @@ test("guest email includes booking math and brand card attachment reference", ()
   assert.match(html, /62\s*500\s*Ft/i);
 });
 
-test("guest email does not show 0 Ft for missing breakdown values and mentions the 48-hour deposit rule", () => {
+test("approved email does not show 0 Ft for missing breakdown values and mentions the remaining payment deadline", () => {
   const html = buildGuestEmailHtml({
     action: "booking_approved",
     guest_name: "Teszt Aladár",
@@ -97,9 +97,35 @@ test("guest email does not show 0 Ft for missing breakdown values and mentions t
   assert.doesNotMatch(html, /Gyermekek<\/td>.*?0\s*Ft/i);
   assert.doesNotMatch(html, /Kisgyermek.*?0\s*Ft/i);
   assert.doesNotMatch(html, /Kutya:<\/td>.*?0\s*db/i);
-  assert.match(html, /48\s*óra|48\s*órán\s*belül/i);
-  assert.match(html, /el\s*kell\s*utalnia|átutalni/i);
+  assert.match(html, /érkezésed előtti estig/i);
+  assert.match(html, /utald\s*el|átutalni/i);
   assert.match(html, /150\s*000\s*Ft/i);
+});
+
+test("approved email uses the current bank details and requests the remaining amount by the previous evening", () => {
+  const html = buildGuestEmailHtml({
+    action: "booking_approved",
+    guest_name: "Katona Fruzsina",
+    email: "fruzsina@example.com",
+    check_in: "2026-09-10",
+    check_out: "2026-09-12",
+    adults: 2,
+    total: 180000,
+    deposit: 90000,
+    nights: 2,
+    room_subtotal: 150000,
+    ifa_subtotal: 30000,
+    nightly_adult_rate: 37500,
+  });
+
+  assert.match(html, /OTP Bank/i);
+  assert.match(html, /Katona Fruzsina/i);
+  assert.match(html, /11773384-01987919/);
+  assert.match(html, /HU62117733840198791900000000/);
+  assert.match(html, /OTPVHUHB/);
+  assert.match(html, /90\s*000\s*Ft/i);
+  assert.match(html, /érkezésed előtti estig/i);
+  assert.doesNotMatch(html, /teljes költségének 50%/i);
 });
 
 test("rejected email omits pricing details and dog row", () => {

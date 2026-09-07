@@ -590,8 +590,7 @@ function BookingsPanel() {
             single_night_surcharge: bookingSummary.singleNightSurcharge,
             nightly_adult_rate: bookingSummary.nightlyAdultRate,
             nightly_child_rate: bookingSummary.nightlyChildRate,
-            payment_note:
-              "A foglalás teljes költségének 50%-át kell átutalni a megadott bankszámlára, a foglalási névvel megjelölve.",
+            payment_note: null,
           };
 
           if (!payload.email || !payload.check_in || !payload.check_out) {

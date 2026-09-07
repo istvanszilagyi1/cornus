@@ -96,11 +96,7 @@ function formatDate(dateValue: string | null | undefined) {
 
 function formatMoney(value: number | undefined) {
   const safeValue = Number(value ?? 0);
-  return new Intl.NumberFormat("hu-HU", {
-    style: "currency",
-    currency: "HUF",
-    maximumFractionDigits: 0,
-  }).format(safeValue);
+  return `${new Intl.NumberFormat("hu-HU", { maximumFractionDigits: 0 }).format(safeValue)} Ft`;
 }
 
 function getNotificationRecipients() {
@@ -110,11 +106,11 @@ function getNotificationRecipients() {
 
 function getBankingDetails() {
   return {
-    bankName: process.env["BANK_NAME"] ?? "CORNUS Vendégház",
-    accountHolder: process.env["BANK_ACCOUNT_HOLDER"] ?? "Horváth-Katona Fruzsina",
-    accountNumber: process.env["BANK_ACCOUNT_NUMBER"] ?? "11732030-70001086",
-    iban: process.env["BANK_IBAN"] ?? "HU17 1173 2030 7000 1086 0000 0000",
-    swift: process.env["BANK_SWIFT"] ?? "OTPHHUHB",
+    bankName: process.env["BANK_NAME"] ?? "OTP Bank",
+    accountHolder: process.env["BANK_ACCOUNT_HOLDER"] ?? "Katona Fruzsina",
+    accountNumber: process.env["BANK_ACCOUNT_NUMBER"] ?? "11773384-01987919",
+    iban: process.env["BANK_IBAN"] ?? "HU62117733840198791900000000",
+    swift: process.env["BANK_SWIFT"] ?? "OTPVHUHB",
   };
 }
 
@@ -158,19 +154,23 @@ function getContactLineHtml() {
 export function buildGuestEmailHtml(payload: BookingEmailPayload) {
   const summary = getSummaryValues(payload);
   const guests = payload.guests ?? Math.max(1, Number(payload.adults ?? 1) + Number(payload.children ?? 0));
+  const bankingDetails = getBankingDetails();
+  const remainingAmount = Math.max(summary.total - summary.deposit, 0);
 
   const bodyText = {
     booking_received: "Köszönjük a foglalási kérelmedet! A foglalásod jóváhagyásához és véglegesítéséhez kérjük, utald át az előleget (a végösszeg 50%-át) a lent megadott bankszámlára 48 órán belül. Az alábbiakban találod a pontos árkalkulációt és a banki adatokat. Az érkezés 15:00-16:00 között a távozás pedig 10:00. Ettől eltérő távozás külön egyeztetést igényel.",
-    booking_approved: "Örömmel értesítünk, hogy a foglalásod jóváhagyásra került! Szeretettel várunk a Cornus Vendégházban. A gördülékeny tartózkodás érdekében csatolva küldjük a szálláshely házirendjét. Az érkezés 15:00-16:00 között a távozás pedig 10:00. Ettől eltérő távozás külön egyeztetést igényel.",
+    booking_approved: `Örömmel értesítünk, hogy a foglalásod jóváhagyásra került! Szeretettel várunk a Cornus Vendégházban. A gördülékeny tartózkodás érdekében csatolva küldjük a szálláshely házirendjét. Az érkezés 15:00-16:00 között a távozás pedig 10:00. Ettől eltérő távozás külön egyeztetést igényel. A fennmaradó összeget (${formatMoney(remainingAmount)}) kérjük, legkésőbb az érkezésed előtti estig utald el az alábbi bankszámlára.`,
     booking_rejected: "Sajnáljuk, de a megadott időpontokra a foglalásod elutasításra került. Kérjük, válassz másik időpontot a weboldalon, vagy vedd fel velünk a kapcsolatot, hogy közösen találjunk egy megfelelő dátumot.",
   }[payload.action];
 
   const adultRate = Number(payload.nightly_adult_rate ?? 0);
   const childRate = Number(payload.nightly_child_rate ?? 0);
   const fallbackPaymentNote = "A foglalás teljes költségének 50%-át kell átutalni a megadott bankszámlára. Az előleget 48 órán belül el kell utalni, a foglalási névvel megjelölve.";
-  const paymentNote = ((payload.payment_note ?? fallbackPaymentNote).trim() || fallbackPaymentNote).includes("48")
-    ? (payload.payment_note ?? fallbackPaymentNote).trim() || fallbackPaymentNote
-    : `${(payload.payment_note ?? fallbackPaymentNote).trim() || fallbackPaymentNote} Az előleget 48 órán belül el kell utalni, a foglalási névvel megjelölve.`;
+  const paymentNote = payload.action === "booking_approved"
+    ? ""
+    : ((payload.payment_note ?? fallbackPaymentNote).trim() || fallbackPaymentNote).includes("48")
+      ? (payload.payment_note ?? fallbackPaymentNote).trim() || fallbackPaymentNote
+      : `${(payload.payment_note ?? fallbackPaymentNote).trim() || fallbackPaymentNote} Az előleget 48 órán belül el kell utalni, a foglalási névvel megjelölve.`;
 
   const mathRows = payload.action === "booking_rejected"
     ? ""
@@ -238,20 +238,18 @@ export function buildGuestEmailHtml(payload: BookingEmailPayload) {
 
           ${pricingSummaryMarkup}
 
-          ${payload.action === "booking_received" ? `
+          ${payload.action === "booking_received" || payload.action === "booking_approved" ? `
             <div style="margin: 0 0 20px; padding: 18px; border: 1px solid #d8d7d1; background: #f9fafb; border-radius: 10px;">
-              <h3 style="margin: 0 0 8px; font-size: 20px; color: #1f2a2d;">Fizetési adatok – banki átutalás (Előleg)</h3>
-              <p style="margin: 0 0 6px;"><strong>Bank:</strong> ${getBankingDetails().bankName}</p>
-              <p style="margin: 0 0 6px;"><strong>Kedvezményezett:</strong> ${getBankingDetails().accountHolder}</p>
-              <p style="margin: 0 0 6px;"><strong>Számlaszám:</strong> ${getBankingDetails().accountNumber}</p>
-              <p style="margin: 0 0 6px;"><strong>IBAN:</strong> ${getBankingDetails().iban}</p>
-              <p style="margin: 0 0 6px;"><strong>SWIFT/BIC:</strong> ${getBankingDetails().swift}</p>
+              <h3 style="margin: 0 0 8px; font-size: 20px; color: #1f2a2d;">Fizetési adatok – banki átutalás</h3>
+              <p style="margin: 0 0 6px;"><strong>Bank:</strong> ${bankingDetails.bankName}</p>
+              <p style="margin: 0 0 6px;"><strong>Kedvezményezett:</strong> ${bankingDetails.accountHolder}</p>
+              <p style="margin: 0 0 6px;"><strong>Számlaszám:</strong> ${bankingDetails.accountNumber}</p>
+              <p style="margin: 0 0 6px;"><strong>IBAN:</strong> ${bankingDetails.iban}</p>
+              <p style="margin: 0 0 6px;"><strong>SWIFT/BIC:</strong> ${bankingDetails.swift}</p>
               <p style="margin: 12px 0 0; color: #1f2a2d;"><strong>Közlemény:</strong> Kérjük, a közleménybe írd be a foglaló nevét (${payload.guest_name}) és a dátumot (${formatDate(payload.check_in)}).</p>
-              <p style="margin: 10px 0 0; color: #1f2a2d;"><strong>Fontos:</strong> Az előleget (${formatMoney(summary.deposit)}) 48 órán belül el kell utalni, különben a foglalási kérelem érvénytelenné válik.</p>
+              ${payload.action === "booking_received" ? `<p style="margin: 10px 0 0; color: #1f2a2d;"><strong>Fontos:</strong> Az előleget (${formatMoney(summary.deposit)}) 48 órán belül el kell utalni, különben a foglalási kérelem érvénytelenné válik.</p>` : `<p style="margin: 10px 0 0; color: #1f2a2d;"><strong>Fontos:</strong> A fennmaradó összeget (${formatMoney(remainingAmount)}) legkésőbb az érkezésed előtti estig kérjük átutalni.</p>`}
             </div>
           ` : ""}
-
-          ${payload.action === "booking_approved" && paymentNote ? `<p style="margin: 0 0 20px; color: #3d3d40;">${paymentNote}</p>` : ""}
 
           ${payload.message ? `<p style="margin: 0 0 18px; color: #3d3d40;"><strong>Üzeneted:</strong><br />${payload.message}</p>` : ""}
           ${payload.action === "booking_received" ? `<p style="margin: 0 0 10px; color: #4b5563;">Amint beérkezik az előleg, egy újabb e-mailben véglegesítjük és visszaigazoljuk a foglalásodat.</p>` : ""}
